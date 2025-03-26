@@ -1,6 +1,8 @@
+import Pokedex from "./components/Pokedex";
+
 const Homepage = () => {
     return (
-        <h1>Homepage</h1>
+        <Pokedex />
     );
 }
 
