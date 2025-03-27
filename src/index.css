@@ -1,9 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 @import "tailwindcss";
 
 @theme {
   --color-Primary: #094FA1;       /* dark blue */
   --color-Secondary: #00ACED;     /* blue */
+  --color-BlackText: #2C2C2C;     /* not pure black */
   --color-LightBlue: #c4e9ff;     /* light blue for screen*/
   --color-Red: #c91a2f;           /* red for pokedex */
 
@@ -13,11 +14,11 @@
 
   --color-VerticalDarkAndBlueGradient: linear-gradient(180deg, var(--color-Secondary), var(--color-Primary));    /* for profile picture border */
 
-  --font-Pixel: "VT323";
+  --font-Inter: "Inter", serif;
 }
 
 @layer base {
 	body {
-		@apply font-Pixel;
+		@apply font-Inter;
 	}
 }

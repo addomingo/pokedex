@@ -13,7 +13,7 @@ const PokedexCircle = (props) => {
 
 const Pokedex = (props) => {
     return (
-        <div className={`absolute h-screen w-screen ${props.mounted ? '' : 'hidden'}`}>
+        <div className={`absolute top-0 h-screen w-screen ${props.mounted ? '' : 'hidden'}`}>
             <div className="relative h-1/2 bg-Red flex justify-center overflow-hidden"
                 style = {{
                     transform: props.visibility ? 'translateY(0)' : 'translateY(-100%)', // move upwards
