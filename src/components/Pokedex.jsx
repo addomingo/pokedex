@@ -11,10 +11,15 @@ const PokedexCircle = (props) => {
     );
 }
 
-const Pokedex = () => {
+const Pokedex = (props) => {
     return (
-        <div className="h-screen w-screen">
-            <div className="relative h-1/2 bg-Red flex justify-center overflow-hidden">
+        <div className={`absolute h-screen w-screen ${props.mounted ? '' : 'hidden'}`}>
+            <div className="relative h-1/2 bg-Red flex justify-center overflow-hidden"
+                style = {{
+                    transform: props.visibility ? 'translateY(0)' : 'translateY(-100%)', // move upwards
+                    transition: "transform 3s ease"
+                }}
+                >
                 {/* lines (top part) */}
                 <div className="absolute bottom-0 h-[23px] w-full bg-[#760f1b]" />
                 <div className="absolute bottom-0 h-[13px] w-full bg-white z-10 border-b-1 border-black" />
@@ -32,7 +37,12 @@ const Pokedex = () => {
                 <PokedexCircle position="-top-50 -right-50"></PokedexCircle>
             </div>
 
-            <div className="relative h-1/2 bg-Red flex justify-center overflow-hidden">
+            <div className="relative h-1/2 bg-Red flex justify-center overflow-hidden"
+                style = {{
+                    transform: props.visibility ? 'translateY(0)' : 'translateY(100%)', // move downwards
+                    transition: "transform 3s ease"
+                }}
+                >
                 {/* lines (bottom part) */}
                 <div className="absolute top-0 h-[23px] w-full bg-[#760f1b]" />
                 <div className="absolute top-0 h-[13px] w-full bg-white z-10 border-t-1 border-black" />
