@@ -10,17 +10,38 @@ const Homepage = () => {
     const [isPokedexVisible, setIsPokedexVisible] = useState(true);
     const [isPokedexMounted, setIsPokedexMounted] = useState(true);
 
+    const [offset, setOffset] = useState(0);
+    const [pokemonData, setPokemonData] = useState([]);
+
     // fetch all pokemon
     const fetchPokemon = async() => {
-        await axios.get('https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0')
+        await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=10&offset=${offset}`)
         .then((res) => {
-            console.log(res.data);
-            console.log(res.data.results);
-            //setProducts(res.data);
+            //console.log(res.data);
+            //console.log(res.data.results[0]);
+            fetchPokemonData(res.data.results);
         })
         .catch((error) => {
             console.error('Error fetching pokemon:', error);
         });
+    }
+
+    // fetch all pokemon data; returns an array of all pokemon data
+    const fetchPokemonData = async(pokemon) => {
+        try {
+            // fetch each pokemon data
+            const responses = await Promise.all(pokemon.map(pokemon => axios.get(pokemon.url)));
+
+            // store extracted data
+            const fetchedPokemonData = responses.map(response => response.data);
+            //console.log(fetchedPokemonData);
+
+            // append fetched pokemon data to already stored pokemon data
+            const storedData = pokemonData;
+            setPokemonData([...storedData, ...fetchedPokemonData]);
+        } catch (error) {
+            console.error('Error fetching pokemon data:', error);
+        }
     }
 
 
@@ -44,12 +65,17 @@ const Homepage = () => {
 
                 {/* Pokemon Card List View */}
                 <div className="h-full w-full flex flex-wrap gap-2">
-                    <PokemonCard image={Lapras} type="water"/>
+                    { pokemonData.map(pokemonDetails => {
+                        return (
+                            <PokemonCard key={pokemonDetails.id} data={pokemonDetails} image={Lapras} type="water"/>
+                        );
+                    })}
+                    {/* <PokemonCard data={} image={Lapras} type="water"/>
                     <PokemonCard image={Kirlia} type="grass"/>
                     <PokemonCard image={Lapras} type="dark"/>
                     <PokemonCard image={Kirlia} type="steel"/>
                     <PokemonCard image={Lapras} type="fairy"/>
-                    <PokemonCard image={Kirlia} type="stellar"/>
+                    <PokemonCard image={Kirlia} type="stellar"/> */}
                 </div>
             </div>
 

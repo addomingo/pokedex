@@ -27,7 +27,7 @@ const TypeLabel = (props) => {
     const label = type.charAt(0).toUpperCase() + type.slice(1);
 
     return (
-        <div className="text-xs sm:text-sm font-semibold text-white w-25 p-[3px] sm:p-[2px] rounded-md sm:rounded-lg flex justify-center items-center" style={{ backgroundColor: labelColor.get(type) }}>
+        <div className="text-xs sm:text-sm font-semibold text-white w-22 p-[3px] sm:p-[2px] rounded-md sm:rounded-lg flex justify-center items-center" style={{ backgroundColor: labelColor.get(type) }}>
             {label}
         </div>
     );
@@ -55,27 +55,42 @@ const PokemonCard = (props) => {
         ["fairy", "#f6b4f6"],
         ["stellar", "#9bdcd3"]
     ]);
-    const type = props.type;
 
+    const pokemon = props.data;
+    const id = pokemon.id;
+    const displayID = id.toString().padStart(3, '0');
+    const name = (pokemon.name).charAt(0).toUpperCase() + (pokemon.name).slice(1); // capitalize pokemon name
+    const types = pokemon.types;
+    const mainType = types[0].type.name;
+ 
     return (
         <div className="h-[35vh] sm:h-[43vh] bg-[#ecf8ff] rounded-3xl drop-shadow-md p-5 cursor-pointer" style={{ 
-            background: `linear-gradient(180deg, white 50%, ${gradientColor.get(type)})`,
+            background: `linear-gradient(180deg, white 50%, ${gradientColor.get(mainType)})`,
             backgroundColor: '#ecf8ff' // fallback background color if gradient doesn't load
         }}>
+            {/* pokemon number */}
             <div className="flex justify-end gap-[2px]">
                 <h2 className="text-xs sm:text-sm font-extrabold text-BlackText leading-none">No</h2>
-                <h1 className="text-xl sm:text-2xl font-bold text-BlackText leading-none">0131</h1>
+                <h1 className="text-xl sm:text-2xl font-bold text-BlackText leading-none">{displayID}</h1>
             </div>
+            {/* pokemon image */}
             <div className="relative h-[70%]">
-                <div className="h-full p-[10%] absolute z-0">
-                    <Pokeball color={gradientColor.get(type)}/>
+                <div className="h-full p-[5%] absolute z-0">
+                    <Pokeball color={gradientColor.get(mainType)}/>
                 </div>
-                <img src={props.image} className="h-full aspect-square object-cover relative z-10"/>
+                <img src={`https://assets.pokemon.com/assets/cms2/img/pokedex/full/${displayID}.png`}
+                    className="h-full aspect-square object-cover relative z-10"/>
             </div>
+            {/* pokemon name and type tags */}
             <div className="w-full flex flex-col justify-center items-center">
-                <h1 className="text-2xl sm:text-3xl font-bold text-BlackText mb-3">Lapras</h1>
-                <div className="flex">
-                    <TypeLabel type={type} />
+                <h1 className="text-2xl sm:text-3xl font-bold text-BlackText mb-3">{name}</h1>
+                {/* type label/tags */}
+                <div className="flex gap-1">
+                    { types.map((typeInfo, index) => {
+                        return (
+                            <TypeLabel key={index} type={typeInfo.type.name} />
+                        );
+                    })}
                 </div>
             </div>
         </div>
