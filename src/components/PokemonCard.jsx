@@ -58,13 +58,14 @@ const PokemonCard = (props) => {
 
     const pokemon = props.data;
     const id = pokemon.id;
-    const displayID = id.toString().padStart(3, '0');
+    const imageID = id.toString().padStart(3, '0');
+    const displayID = id.toString().padStart(4, '0');
     const name = (pokemon.name).charAt(0).toUpperCase() + (pokemon.name).slice(1); // capitalize pokemon name
     const types = pokemon.types;
     const mainType = types[0].type.name;
  
     return (
-        <div className="h-[35vh] sm:h-[43vh] bg-[#ecf8ff] rounded-3xl drop-shadow-md p-5 cursor-pointer" style={{ 
+        <div className="h-75 sm:h-90 bg-[#ecf8ff] rounded-3xl drop-shadow-md pt-4 pb-5 px-5 cursor-pointer" style={{ 
             background: `linear-gradient(180deg, white 50%, ${gradientColor.get(mainType)})`,
             backgroundColor: '#ecf8ff' // fallback background color if gradient doesn't load
         }}>
@@ -78,7 +79,7 @@ const PokemonCard = (props) => {
                 <div className="h-full p-[5%] absolute z-0">
                     <Pokeball color={gradientColor.get(mainType)}/>
                 </div>
-                <img src={`https://assets.pokemon.com/assets/cms2/img/pokedex/full/${displayID}.png`}
+                <img src={`https://assets.pokemon.com/assets/cms2/img/pokedex/full/${imageID}.png`}
                     className="h-full aspect-square object-cover relative z-10"/>
             </div>
             {/* pokemon name and type tags */}

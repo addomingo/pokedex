@@ -4,6 +4,7 @@ import PokemonCard from "./components/PokemonCard";
 import Lapras from "./assets/131.png";
 import Kirlia from "./assets/Kirlia.png";
 import axios from "axios";
+import FilterBar from "./components/FilterBar";
 
 const Homepage = () => {
     // pokedex animation
@@ -61,21 +62,19 @@ const Homepage = () => {
     return (
         <div className={`relative min-h-screen min-w-screen bg-LightBlue ${isPokedexMounted ? 'overflow-hidden' : ''}`}>
             {/* main page */}
-            <div className="flex h-full w-full">
+            <div className="flex flex-col h-full w-full p-5">
+
+                <FilterBar />
+
+                <br></br>
 
                 {/* Pokemon Card List View */}
-                <div className="h-full w-full flex flex-wrap gap-2">
+                <div className="h-full flex flex-wrap gap-2 justify-center bg-LighterBlue">
                     { pokemonData.map(pokemonDetails => {
                         return (
                             <PokemonCard key={pokemonDetails.id} data={pokemonDetails} image={Lapras} type="water"/>
                         );
                     })}
-                    {/* <PokemonCard data={} image={Lapras} type="water"/>
-                    <PokemonCard image={Kirlia} type="grass"/>
-                    <PokemonCard image={Lapras} type="dark"/>
-                    <PokemonCard image={Kirlia} type="steel"/>
-                    <PokemonCard image={Lapras} type="fairy"/>
-                    <PokemonCard image={Kirlia} type="stellar"/> */}
                 </div>
             </div>
 

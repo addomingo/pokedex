@@ -2,10 +2,11 @@
 @import "tailwindcss";
 
 @theme {
-  --color-Primary: #094FA1;       /* dark blue */
+  --color-Primary: #5EBFEA;       /* dark blue green */
   --color-Secondary: #00ACED;     /* blue */
   --color-BlackText: #2C2C2C;     /* not pure black */
-  --color-LightBlue: #c4e9ff;     /* light blue for screen*/
+  --color-LightBlue: #92DEFE;     /* light blue for screen   92DEFE  orig: c4e9ff  */ 
+  --color-LighterBlue: #bbebff;
   --color-Red: #c91a2f;           /* red for pokedex */
 
   --color-DarkAndBlueGradient: linear-gradient(65deg, var(--color-Secondary), var(--color-Primary));    /* color gradient seen in landing page */
