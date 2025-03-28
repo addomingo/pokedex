@@ -69,12 +69,19 @@ const Homepage = () => {
                 <br></br>
 
                 {/* Pokemon Card List View */}
-                <div className="h-full flex flex-wrap gap-2 justify-center bg-LighterBlue">
+                <div className="h-full relative flex flex-wrap gap-2 justify-center items-center bg-LighterBlue rounded-lg p-5">
+                    {/* pokemon cards mapping */}
                     { pokemonData.map(pokemonDetails => {
                         return (
                             <PokemonCard key={pokemonDetails.id} data={pokemonDetails} image={Lapras} type="water"/>
                         );
                     })}
+
+                    {/* decorations, TLRB */}
+                    <div className="absolute top-0 h-2 w-[calc(100%-200px)] bg-LightBlue rounded-b-lg"/>
+                    <div className="absolute left-0 h-[calc(100%-200px)] w-2 bg-LightBlue rounded-r-lg"/>
+                    <div className="absolute right-0 h-[calc(100%-200px)] w-2 bg-LightBlue rounded-l-lg"/>
+                    <div className="absolute bottom-0 h-2 w-[calc(100%-200px)] bg-LightBlue rounded-t-lg"/>
                 </div>
             </div>
 
