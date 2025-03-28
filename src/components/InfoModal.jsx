@@ -1,33 +1,47 @@
 import PokeballIcon from '../assets/Pokeball_Icon.png';
 
+const typeColor = new Map([
+    ["normal", "#9fa19e"],
+    ["fire", "#e72726"],
+    ["fighting", "#fe7e00"],
+    ["water", "#2981ef"],
+    ["flying", "#81b8ee"],
+    ["grass", "#3fa12a"],
+    ["poison", "#9241cc"],
+    ["electric", "#fabf00"],
+    ["ground", "#915121"],
+    ["psychic", "#ee4179"],
+    ["rock", "#aea981"],
+    ["ice", "#3ccfee"],
+    ["bug", "#91a11b"],
+    ["dragon", "#5160e1"],
+    ["ghost", "#704070"],
+    ["dark", "#614d4e"],
+    ["steel", "#60a1b7"],
+    ["fairy", "#ee70ee"],
+    ["stellar", "#40b5a5"]
+]);
+
+const WeaknessTypeLabel = (props) => {
+    const type = props.type;
+    // capitalized type
+    const label = type.charAt(0).toUpperCase() + type.slice(1);
+
+    return (
+        <div className="text-xs sm:text-sm font-semibold text-white w-full p-[3px] sm:p-[2px] rounded-md sm:rounded-lg flex justify-center items-center" style={{ backgroundColor: typeColor.get(type) }}>
+            {label}
+        </div>
+    );
+}
+
 const InfoModal = (props) => {
-    const typeColor = new Map([
-        ["normal", "#9fa19e"],
-        ["fire", "#e72726"],
-        ["fighting", "#fe7e00"],
-        ["water", "#2981ef"],
-        ["flying", "#81b8ee"],
-        ["grass", "#3fa12a"],
-        ["poison", "#9241cc"],
-        ["electric", "#fabf00"],
-        ["ground", "#915121"],
-        ["psychic", "#ee4179"],
-        ["rock", "#aea981"],
-        ["ice", "#3ccfee"],
-        ["bug", "#91a11b"],
-        ["dragon", "#5160e1"],
-        ["ghost", "#704070"],
-        ["dark", "#614d4e"],
-        ["steel", "#60a1b7"],
-        ["fairy", "#ee70ee"],
-        ["stellar", "#40b5a5"]
-    ]);
     const type = 'water';
     const id = 2;
     const imageID = id.toString().padStart(3, '0');
     const displayID = id.toString().padStart(4, '0');
     const name = 'Lapras';
     const category = 'Transport Pokemon';
+    const weaknessList = ['grass', 'electric', 'fighting', 'rock'];
 
     const shadowStyle = 'shadow-[15px_15px_4px_#bfbfbf]';
 
@@ -52,6 +66,27 @@ const InfoModal = (props) => {
                             <h2 className="text-2xl font-semibold text-BlackText">{category}</h2>
                         </div>
                     </div>
+                    <br></br>
+                    <div className="flex">
+                        {/* weaknesses box */}
+                        <div className={`flex-1/3 flex-col border border-3 rounded-xl border-GrayBorder overflow-hidden ${shadowStyle}`}>
+                            <div className="flex gap-2 px-4 py-1 bg-GrayBorder justify-center">
+                                <h4 className="text-sm font-bold text-white">Weaknesses</h4>
+                            </div>
+                            {/* weakness type list */}
+                            <div className="bg-white flex flex-col p-4 gap-2">
+                                { weaknessList.map((weaknessType, index) => {
+                                    return (
+                                        <WeaknessTypeLabel key={index} type={weaknessType}/>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                        
+                        <div className="flex-2/3">madame</div>
+                    </div>
+
+
                 </div>
 
 
