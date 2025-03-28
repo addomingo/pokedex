@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 const FilterBar = () => {
     const [isAdvancedOptionsVisible, setIsAdvancedOptionsVisible] = useState(false);
-    
+
     return (
         <>
             {/* top border */}
@@ -16,10 +16,10 @@ const FilterBar = () => {
             </div>
 
             {/* content */}
-            <div className="flex gap-5 bg-LighterBlue mx-2 px-5 py-3">
+            <div className="flex flex-col xl:flex-row gap-5 bg-LighterBlue mx-2 px-5 py-3">
                 {/* search bar */}
-                <div className="grow flex bg-white text-Secondary font-bold py-2 px-5 rounded-lg flex gap-5">
-                    <h3>Find that Pokemon!</h3>
+                <div className="grow flex bg-white text-Secondary font-bold py-2 px-5 rounded-lg flex gap-5 h-10">
+                    <h3 className="flex-none">Find that Pokemon!</h3>
                     <input 
                         className="focus:outline-none grow"
                         placeholder="Enter name or ID no."
@@ -29,25 +29,35 @@ const FilterBar = () => {
                     />
                     <Search />
                 </div>
-                
 
-                {/* sort selector */}
-                <div className="bg-white text-Secondary font-bold py-2 px-5 rounded-lg flex gap-5">
-                    <h3>Sort by</h3>
-                    <select name="sort" id="sort" className="min-w-45 focus:outline-none">
-                        <option value="asc_id">Ascending ID no.</option>
-                        <option value="desc_id">Descending ID no.</option>
-                        <option value="asc_name">Name A-Z</option>
-                        <option value="desc_name">Name Z-A</option>
-                    </select>
+                <div className="flex flex-col sm:flex-row gap-5">
+                    {/* sort selector */}
+                    <div className="flex-1 xl:flex-none bg-white text-Secondary font-bold py-2 px-5 rounded-lg flex items-center gap-5 h-10">
+                        <img src={PokeballIcon} className="h-5"></img>
+                        <h3 className="flex-none">Sort by</h3>
+                        <select name="sort" id="sort" className="w-30 focus:outline-none grow">
+                            <option value="asc_id">ID no.</option>
+                            <option value="desc_id">Name</option>
+                        </select>
+                    </div>
+
+                    {/* sort selector */}
+                    <div className="flex-1 xl:flex-none bg-white text-Secondary font-bold py-2 px-5 rounded-lg flex items-center gap-5 h-10">
+                        <img src={PokeballIcon} className="h-5"></img>
+                        <h3 className="flex-none">Order by</h3>
+                        <select name="sort" id="sort" className="w-35 focus:outline-none grow">
+                            <option value="asc_id">Ascending</option>
+                            <option value="desc_id">Descending</option>
+                        </select>
+                    </div>
+                    
+                    {/* button to show advanced search options */}
+                    {/* <button className="bg-white text-Secondary font-bold py-2 px-5 rounded-lg flex gap-2 justify-center items-center cursor-pointer">
+                        <img src={PokeballIcon} className="h-5"></img>
+                        Show Advanced Search
+                        <img src={PokeballIcon} className="h-5"></img>
+                    </button> */}
                 </div>
-                
-                {/* button to show advanced search options */}
-                <button className="bg-white text-Secondary font-bold py-2 px-5 rounded-lg flex gap-2 justify-center items-center cursor-pointer">
-                    <img src={PokeballIcon} className="h-5"></img>
-                    Show Advanced Search
-                    <img src={PokeballIcon} className="h-5"></img>
-                </button>
             </div>
 
             {/* bottom border */}
