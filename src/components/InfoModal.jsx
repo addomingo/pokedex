@@ -22,6 +22,7 @@ const typeColor = new Map([
     ["stellar", "#40b5a5"]
 ]);
 
+// placed in weakness box
 const WeaknessTypeLabel = (props) => {
     const type = props.type;
     // capitalized type
@@ -34,14 +35,28 @@ const WeaknessTypeLabel = (props) => {
     );
 }
 
+const PokemonTypeLabel = (props) => {
+    const type = props.type;
+    // capitalized type
+    const label = type.charAt(0).toUpperCase() + type.slice(1);
+
+    return (
+        <div className="text-3xl font-semibold text-white w-full p-[3px] sm:p-[2px] rounded-md sm:rounded-lg flex justify-center items-center" style={{ backgroundColor: typeColor.get(type) }}>
+            {label}
+        </div>
+    );
+}
+
 const InfoModal = (props) => {
-    const type = 'water';
+    const types = ['water', 'ice'];
     const id = 2;
     const imageID = id.toString().padStart(3, '0');
     const displayID = id.toString().padStart(4, '0');
     const name = 'Lapras';
     const category = 'Transport Pokemon';
     const weaknessList = ['grass', 'electric', 'fighting', 'rock'];
+    const height = '2.5m';
+    const weight = '220.0kg';
 
     const shadowStyle = 'shadow-[15px_15px_4px_#bfbfbf]';
 
@@ -56,18 +71,18 @@ const InfoModal = (props) => {
                     
                     <div className={`flex-1 flex-col border border-3 rounded-xl border-GrayBorder overflow-hidden ${shadowStyle}`}>
                         {/* pokemon ID number and name */}
-                        <div className="flex gap-2 px-4 py-2" style={{ backgroundColor: typeColor.get(type) }}>
+                        <div className="flex gap-2 px-4 py-2" style={{ backgroundColor: typeColor.get(types[0]) }}>
                         <img src={PokeballIcon} className="h-8 flex-none aspect-square rounded-full m-[3px] border border-white border-3"/>
                             <h1 className="flex-none text-3xl font-bold text-white">{displayID}</h1>
                             <h1 className="flex-grow text-3xl font-bold text-white pl-10">{name}</h1>
                         </div>
                         {/* pokemon category */}
                         <div className="bg-white flex justify-end px-4 py-2">
-                            <h2 className="text-2xl font-semibold text-BlackText">{category}</h2>
+                            <h2 className="text-2xl font-semibold text-GrayBorder">{category}</h2>
                         </div>
                     </div>
                     <br></br>
-                    <div className="flex">
+                    <div className="flex gap-6">
                         {/* weaknesses box */}
                         <div className={`flex-1/3 flex-col border border-3 rounded-xl border-GrayBorder overflow-hidden ${shadowStyle}`}>
                             <div className="flex gap-2 px-4 py-1 bg-GrayBorder justify-center">
@@ -83,7 +98,28 @@ const InfoModal = (props) => {
                             </div>
                         </div>
                         
-                        <div className="flex-2/3">madame</div>
+                        <div className="flex-2/3 flex flex-col gap-5">
+                            {/* type label/s */}
+                            <div className="flex grow gap-3 pt-3 pr-7">
+                                { types.map((type, index) => {
+                                    return (
+                                        <PokemonTypeLabel key={index} type={type}/>
+                                    );
+                                })}
+                            </div>
+                            {/* height and weight box */}
+                            <div className={`flex-col border border-3 rounded-xl border-GrayBorder overflow-hidden ${shadowStyle}`}>
+                                <div className="bg-white flex px-10 py-2 gap-2">
+                                    <h2 className="flex-none text-2xl font-semibold text-GrayBorder">Height</h2>
+                                    <h2 className="grow text-center text-2xl font-semibold text-GrayBorder">{height}</h2>
+                                </div>
+                                <hr className="border-t-5 border-dashed border-[#9EA7AA]"></hr>
+                                <div className="bg-white flex px-10 py-2 gap-2">
+                                    <h2 className="flex-none text-2xl font-semibold text-GrayBorder">Weight</h2>
+                                    <h2 className="grow text-center text-2xl font-semibold text-GrayBorder">{weight}</h2>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
 

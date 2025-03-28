@@ -13,7 +13,6 @@
   /* Detailed Info Modal Colors */
   --color-GrayBorder: #595D5E;    
   --color-GrayHeader: #C6C6C6;        /* header color for abilities and stats */
-  --shadow-3xl: 0 35px 35px #000000-50; /* shadow */
 
   --font-Inter: "Inter", serif;
 }
