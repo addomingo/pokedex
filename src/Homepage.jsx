@@ -5,6 +5,7 @@ import Lapras from "./assets/131.png";
 import Kirlia from "./assets/Kirlia.png";
 import axios from "axios";
 import FilterBar from "./components/FilterBar";
+import InfoModal from "./components/InfoModal";
 
 const Homepage = () => {
     // pokedex animation
@@ -13,6 +14,7 @@ const Homepage = () => {
 
     const [offset, setOffset] = useState(0);
     const [pokemonData, setPokemonData] = useState([]);
+    const InfoModalID = 'pokemon_info_modal';
 
     // fetch all pokemon
     const fetchPokemon = async() => {
@@ -66,6 +68,8 @@ const Homepage = () => {
 
                 <FilterBar />
 
+                <button className="btn" onClick={()=>document.getElementById(InfoModalID).showModal()}>open modal</button>
+
                 <br></br>
 
                 {/* Pokemon Card List View */}
@@ -84,6 +88,9 @@ const Homepage = () => {
                     <div className="absolute bottom-0 h-2 w-[calc(100%-200px)] bg-LightBlue rounded-t-lg"/>
                 </div>
             </div>
+
+            {/* detailed info pop up */}
+            <InfoModal id={InfoModalID} />
 
             {/* pokedex animation */}
             <Pokedex visibility={isPokedexVisible} mounted={isPokedexMounted} />
