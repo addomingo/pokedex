@@ -14,7 +14,19 @@ const Homepage = () => {
 
     const [offset, setOffset] = useState(0);
     const [pokemonData, setPokemonData] = useState([]);
+    
+    // Detailed Info View Modal information
     const InfoModalID = 'pokemon_info_modal';
+    const [currentPokemonIDInModal, setCurrentPokemonIDInModal] = useState(0);
+
+    // function passed to PokemonCard that is evoked when card is clicked
+    // changes the pokemonID in the modal to the ID of the selected pokemon
+    // also passed to InfoModal and is evoked when Previous, Next, or Close button is clicked
+    const handleChangePokemonIDInModal = (pokemonID) => {
+        setCurrentPokemonIDInModal(pokemonID);
+        console.log(currentPokemonIDInModal);
+        return;
+    }
 
     // fetch all pokemon
     const fetchPokemon = async() => {
@@ -77,7 +89,7 @@ const Homepage = () => {
                     {/* pokemon cards mapping */}
                     { pokemonData.map(pokemonDetails => {
                         return (
-                            <PokemonCard key={pokemonDetails.id} data={pokemonDetails} image={Lapras} type="water"/>
+                            <PokemonCard key={pokemonDetails.id} data={pokemonDetails} image={Lapras} type="water" changeIDFunction={handleChangePokemonIDInModal}/>
                         );
                     })}
 
@@ -90,7 +102,8 @@ const Homepage = () => {
             </div>
 
             {/* detailed info pop up */}
-            <InfoModal id={InfoModalID} />
+            {/* modal only renders if pokemonID is valid/exists */}
+            {(currentPokemonIDInModal != 0) && <InfoModal id={InfoModalID} pokemonID={currentPokemonIDInModal}/>}
 
             {/* pokedex animation */}
             <Pokedex visibility={isPokedexVisible} mounted={isPokedexMounted} />

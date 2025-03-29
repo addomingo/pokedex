@@ -2,6 +2,8 @@ import { CircleX, EyeOff} from 'lucide-react';
 import PokeballIcon from '../assets/Pokeball_Icon.png';
 import Lapras from '../assets/131.png';
 import Pokeball from '../components/Pokeball.jsx';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const typeColor = new Map([
     ["normal", "#9fa19e"],
@@ -52,7 +54,7 @@ const PokemonTypeLabel = (props) => {
 
 // commes with hidden icon if it is a Hidden Ability
 const AbilityText = (props) => {
-    const name = props.name;
+    const name = (props.name).charAt(0).toUpperCase() + (props.name).slice(1);
     const isHidden = props.isHidden;
 
     return (
@@ -134,70 +136,50 @@ const CloseButton = (props) => {
 
 const InfoModal = (props) => {
     const modalID = props.id;
-    const types = ['water', 'ice'];
-    const id = 2;
+    const id = props.pokemonID;
     const imageID = id.toString().padStart(3, '0');
+    const [pokemonData, setPokemonData] = useState(null);
     const displayID = id.toString().padStart(4, '0');
-    const name = 'Lapras';
-    const category = 'Transport Pokemon';
-    const weaknessList = ['grass', 'electric', 'fighting', 'rock'];
-    const height = '2.5m';
-    const weight = '220.0kg';
-    const abilities = [
-        { name: 'Water Absorb', isHidden: false },
-        { name: 'Shell Armor', isHidden: false },
-        { name: 'Hydration', isHidden: true }
-    ];
-    const stats = [
-        {
-          "base_stat": 130,
-          "effort": 2,
-          "stat": {
-            "name": "hp",
-            "url": "https://pokeapi.co/api/v2/stat/1/"
-          }
-        },
-        {
-          "base_stat": 85,
-          "effort": 0,
-          "stat": {
-            "name": "attack",
-            "url": "https://pokeapi.co/api/v2/stat/2/"
-          }
-        },
-        {
-          "base_stat": 80,
-          "effort": 0,
-          "stat": {
-            "name": "defense",
-            "url": "https://pokeapi.co/api/v2/stat/3/"
-          }
-        },
-        {
-          "base_stat": 85,
-          "effort": 0,
-          "stat": {
-            "name": "special-attack",
-            "url": "https://pokeapi.co/api/v2/stat/4/"
-          }
-        },
-        {
-          "base_stat": 95,
-          "effort": 0,
-          "stat": {
-            "name": "special-defense",
-            "url": "https://pokeapi.co/api/v2/stat/5/"
-          }
-        },
-        {
-          "base_stat": 60,
-          "effort": 0,
-          "stat": {
-            "name": "speed",
-            "url": "https://pokeapi.co/api/v2/stat/6/"
-          }
+
+    // provide default values to prevent errors (format similar to PokeAPI response data)
+    const [name, setName] = useState('Pokemon_Name');
+    const [category, setCategory] = useState('Pokemon_Category'); // !!!! fetch this !!!!
+    const [types, setTypes] = useState([{ type: { name: 'unknown' } }]);
+    const [height, setHeight] = useState(0);
+    const [weight, setWeight] = useState(0);
+    const [abilities, setAbilities] = useState([{ ability: { name: 'unknown' }, is_hidden: false }]);
+    const [stats, setStats] = useState([{ stat: { name: 'unknown' }, base_stat: 0 }]);
+
+    // fetch specific pokemon data whenever pokemonID in modal is changed
+    useEffect(() => {
+        const fetchPokemonData = async() => {
+            await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}/`)
+            .then((res) => {
+                //console.log(res.data);
+                setPokemonData(res.data);
+            })
+            .catch((error) => {
+                console.error('Error fetching pokemon:', error);
+            });
         }
-    ];
+        fetchPokemonData();
+    }, [id]);
+
+    // update values when pokemonData is changed
+    // this changes the default values of the needed fields
+    useEffect(() => {
+        if (pokemonData) {
+            console.log(pokemonData);
+            setName((pokemonData.name).charAt(0).toUpperCase() + (pokemonData.name).slice(1));
+            setTypes(pokemonData.types);                        // to access: types[0].type.name
+            setHeight((pokemonData.height/10).toFixed(1));
+            setWeight((pokemonData.weight/10).toFixed(1));
+            setAbilities(pokemonData.abilities);                // to access: abilities[0].ability.name && abilities[0].is_hidden
+            setStats(pokemonData.stats);                        // to access: stats[0].stat.name && abilities[0].base_stat
+        }
+    }, [pokemonData]);
+
+    const weaknessList = ['grass', 'electric', 'fighting', 'rock'];
 
     // related values
     const prevID = id-1;
@@ -215,13 +197,16 @@ const InfoModal = (props) => {
 
                 {/* pokemon image */}
                 <div className="flex-1 relative flex justify-center items-center">
-                    <img src={Lapras} className="h-[75%] aspect-square" style={{ animation: 'bounce-pokemon 10s infinite' }}/>
+                    <img 
+                        src={`https://assets.pokemon.com/assets/cms2/img/pokedex/full/${imageID}.png`} 
+                        className="h-[75%] aspect-square" style={{ animation: 'bounce-pokemon 10s infinite' }}
+                    />
                     {/* spinning pokeballs */}
                     <div className="h-full w-full -z-10 absolute top-0 overflow-hidden">
-                        <Pokeball color={typeColor.get(types[0])} className="absolute -left-35 -bottom-35 opacity-30" style={{ animation: 'spin infinite 20s linear' }}/>
+                        <Pokeball color={typeColor.get(types[0].type.name)} className="absolute -left-35 -bottom-35 opacity-30" style={{ animation: 'spin infinite 20s linear' }}/>
                     </div>
                     <div className="h-[70%] -z-10 absolute -right-35 -top-35 animate-spin" style={{ animation: 'spin infinite 10s linear' }}>
-                        <Pokeball color={typeColor.get(types[0])} className="opacity-30"/>
+                        <Pokeball color={typeColor.get(types[0].type.name)} className="opacity-30"/>
                     </div>
                 </div>
                 
@@ -230,7 +215,7 @@ const InfoModal = (props) => {
                     
                     <div className={`flex-1 flex-col border border-3 rounded-xl border-GrayBorder overflow-hidden ${shadowStyle}`}>
                         {/* pokemon ID number and name */}
-                        <div className="flex gap-2 px-4 py-2" style={{ backgroundColor: typeColor.get(types[0]) }}>
+                        <div className="flex gap-2 px-4 py-2" style={{ backgroundColor: typeColor.get(types[0].type.name) }}>
                             <img src={PokeballIcon} className="h-8 flex-none aspect-square rounded-full m-[3px] border border-white border-3"/>
                             <h1 className="flex-none text-3xl font-bold text-white">{displayID}</h1>
                             <h1 className="flex-grow text-3xl font-bold text-white pl-10">{name}</h1>
@@ -260,9 +245,9 @@ const InfoModal = (props) => {
                         <div className="flex-2/3 flex flex-col gap-5">
                             {/* type label/s */}
                             <div className="flex grow gap-3 pt-3 pr-7">
-                                { types.map((type, index) => {
+                                { types.map((typeElement, index) => {
                                     return (
-                                        <PokemonTypeLabel key={index} type={type}/>
+                                        <PokemonTypeLabel key={index} type={typeElement.type.name}/>
                                     );
                                 })}
                             </div>
@@ -270,12 +255,12 @@ const InfoModal = (props) => {
                             <div className={`flex-col border border-3 rounded-xl border-GrayBorder overflow-hidden ${shadowStyle}`}>
                                 <div className="bg-white flex px-10 py-2 gap-2">
                                     <h2 className="flex-none text-2xl font-semibold text-GrayBorder">Height</h2>
-                                    <h2 className="grow text-center text-2xl font-semibold text-GrayBorder">{height}</h2>
+                                    <h2 className="grow text-center text-2xl font-semibold text-GrayBorder">{`${height}m`}</h2>
                                 </div>
                                 <hr className="border-t-5 border-dashed border-[#9EA7AA]"></hr>
                                 <div className="bg-white flex px-10 py-2 gap-2">
                                     <h2 className="flex-none text-2xl font-semibold text-GrayBorder">Weight</h2>
-                                    <h2 className="grow text-center text-2xl font-semibold text-GrayBorder">{weight}</h2>
+                                    <h2 className="grow text-center text-2xl font-semibold text-GrayBorder">{`${weight} kg`}</h2>
                                 </div>
                             </div>
                         </div>
@@ -289,9 +274,9 @@ const InfoModal = (props) => {
                             </div>
                             {/* ablities list */}
                             <div className="bg-white flex flex-col p-4 gap-2 justify-center items-center">
-                                { abilities.map((ability, index) => {
+                                { abilities.map((abilityElement, index) => {
                                     return (
-                                        <AbilityText key={index} name={ability.name} isHidden={ability.isHidden}/>
+                                        <AbilityText key={index} name={abilityElement.ability.name} isHidden={abilityElement.is_hidden}/>
                                     );
                                 })}
                             </div>
@@ -306,7 +291,7 @@ const InfoModal = (props) => {
                             <div className="bg-white flex flex-col py-3 pl-2 pr-4 gap-1">
                                 { stats.map((stat, index) => {
                                     return (
-                                        <StatBarAndLabel key={index} statName={stat.stat.name} value={stat.base_stat} pokemonType={types[0]} />
+                                        <StatBarAndLabel key={index} statName={stat.stat.name} value={stat.base_stat} pokemonType={types[0].type.name} />
                                     );
                                 })}
                             </div>
