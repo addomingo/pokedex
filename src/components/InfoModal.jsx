@@ -120,7 +120,20 @@ const NextButton = (props) => {
     );
 }
 
+const CloseButton = (props) => {
+    return (
+        <button 
+            className="absolute -bottom-5 flex gap-2 bg-white border-LessHarshBlack border-3 py-2 px-5 rounded-xl justify-center items-center cursor-pointer"
+            onClick={()=>document.getElementById(props.modalID).close()}
+        >
+            <h3 className="text-xl font-semibold text-LessHarshBlack">Close</h3>
+            <CircleX style={{ color: '#303030' }}/>
+        </button>
+    );
+}
+
 const InfoModal = (props) => {
+    const modalID = props.id;
     const types = ['water', 'ice'];
     const id = 2;
     const imageID = id.toString().padStart(3, '0');
@@ -198,10 +211,7 @@ const InfoModal = (props) => {
                 
                 <PreviousButton prevID={prevID} />
                 <NextButton nextID={nextID} />
-                <button className="absolute -bottom-5 flex gap-2 bg-white border-LessHarshBlack border-3 py-2 px-5 rounded-xl justify-center items-center">
-                    <h3 className="text-xl font-semibold text-LessHarshBlack">Close</h3>
-                    <CircleX style={{ color: '#303030' }}/>
-                </button>
+                <CloseButton modalID={modalID}/>
 
                 {/* pokemon image */}
                 <div className="flex-1 relative flex justify-center items-center">
@@ -305,16 +315,11 @@ const InfoModal = (props) => {
                     <br></br>
 
                 </div>
-
-
-                {/* <h3 className="font-bold text-lg">Hello!</h3>
-                <p className="py-4">Press ESC key or click the button below to close</p>
-                <div className="modal-action">
-                    <form method="dialog">
-                        <button className="btn">Close</button>
-                    </form>
-                </div> */}
             </div>
+            {/* required in daisyUI to close modal when clicked outside */}
+            <form method="dialog" className="modal-backdrop">
+                <button>close</button>
+            </form>
         </dialog>
     );
 }
