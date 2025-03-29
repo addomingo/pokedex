@@ -77,7 +77,7 @@ const PokemonCard = (props) => {
             {/* pokemon image */}
             <div className="relative h-[70%]">
                 <div className="h-full p-[5%] absolute z-0">
-                    <Pokeball color={gradientColor.get(mainType)}/>
+                    <Pokeball color={gradientColor.get(mainType)} className="opacity-50"/>
                 </div>
                 <img src={`https://assets.pokemon.com/assets/cms2/img/pokedex/full/${imageID}.png`}
                     className="h-full aspect-square object-cover relative z-10"/>

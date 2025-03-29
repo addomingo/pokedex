@@ -1,12 +1,15 @@
 const Pokeball = (props) => {
     const pokeballColor = props.color;
+    const classNameValues = props.className;
+    const style = props.style;
 
     return (
         <svg
             fill={pokeballColor}
             // width="24" 
             // height="24" 
-            className="h-full aspect-square bg-blue opacity-50"
+            className={`h-full aspect-square ${classNameValues}`}
+            style={style}
             viewBox="0 0 512 512" 
             data-name="Layer 1" 
             id="Layer_1" 

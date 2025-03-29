@@ -17,6 +17,17 @@
   --font-Inter: "Inter", serif;
 }
 
+@keyframes bounce-pokemon {
+  0%, 100% {
+    transform: translateY(-5%);
+    animation-timing-function: cubic-bezier(0, 0, 1, 1);
+  }
+  50% {
+    transform: none;
+    animation-timing-function: cubic-bezier(0, 0, 1, 1);
+  }
+}
+
 @layer base {
 	body {
 		@apply font-Inter;

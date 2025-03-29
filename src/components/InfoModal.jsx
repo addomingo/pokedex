@@ -1,5 +1,7 @@
 import { EyeOff } from 'lucide-react';
 import PokeballIcon from '../assets/Pokeball_Icon.png';
+import Lapras from '../assets/131.png';
+import Pokeball from '../components/Pokeball.jsx';
 
 const typeColor = new Map([
     ["normal", "#9fa19e"],
@@ -158,7 +160,16 @@ const InfoModal = (props) => {
         <dialog id={props.id} className="modal">
             <div className="modal-box w-full max-w-[75vw] flex p-0">
                 {/* pokemon image */}
-                <div className="h-[75%] flex-1 bg-blue-100"></div>
+                <div className="flex-1 relative flex justify-center items-center">
+                    <img src={Lapras} className="h-[70%] aspect-square" style={{ animation: 'bounce-pokemon 10s infinite' }}/>
+                    {/* spinning pokeballs */}
+                    <div className="h-full w-full -z-10 absolute top-0 overflow-hidden">
+                        <Pokeball color={typeColor.get(types[0])} className="absolute -left-35 -bottom-35 opacity-30" style={{ animation: 'spin infinite 20s linear' }}/>
+                    </div>
+                    <div className="h-[70%] -z-10 absolute -right-35 -top-35 animate-spin" style={{ animation: 'spin infinite 10s linear' }}>
+                        <Pokeball color={typeColor.get(types[0])} className="opacity-30"/>
+                    </div>
+                </div>
                 
                 {/* pokemon information */}
                 <div className="flex-1 my-5 ml-5 mr-8">
