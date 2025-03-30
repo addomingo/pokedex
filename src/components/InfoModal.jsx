@@ -166,7 +166,10 @@ const InfoModal = (props) => {
                 console.error('Error fetching pokemon:', error);
             });
         }
-        fetchPokemonData();
+        // checker ensures fetch does not happen when id==0 to prevent error (since pokemon ID=0 does not exist in API)
+        if (id != 0){
+            fetchPokemonData();
+        }
     }, [id]);
 
     // update values when pokemonData is changed

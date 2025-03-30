@@ -70,7 +70,10 @@ const PokemonCard = (props) => {
                 background: `linear-gradient(180deg, white 50%, ${gradientColor.get(mainType)})`,
                 backgroundColor: '#ecf8ff' // fallback background color if gradient doesn't load
             }}
-            onClick={()=>{props.changeIDFunction(id)}}
+            onClick={()=>{
+                props.changeIDFunction(id);
+                props.openModal();
+            }}
         >
             {/* pokemon number */}
             <div className="flex justify-end gap-[2px]">

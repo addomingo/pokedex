@@ -80,8 +80,6 @@ const Homepage = () => {
 
                 <FilterBar />
 
-                <button className="btn" onClick={()=>document.getElementById(InfoModalID).showModal()}>open modal</button>
-
                 <br></br>
 
                 {/* Pokemon Card List View */}
@@ -89,7 +87,10 @@ const Homepage = () => {
                     {/* pokemon cards mapping */}
                     { pokemonData.map(pokemonDetails => {
                         return (
-                            <PokemonCard key={pokemonDetails.id} data={pokemonDetails} image={Lapras} type="water" changeIDFunction={handleChangePokemonIDInModal}/>
+                            <PokemonCard key={pokemonDetails.id} data={pokemonDetails} image={Lapras} type="water" 
+                                changeIDFunction={handleChangePokemonIDInModal}
+                                openModal={()=>{document.getElementById(InfoModalID).showModal()}}
+                            />
                         );
                     })}
 
@@ -102,8 +103,7 @@ const Homepage = () => {
             </div>
 
             {/* detailed info pop up */}
-            {/* modal only renders if pokemonID is valid/exists */}
-            {(currentPokemonIDInModal != 0) && <InfoModal id={InfoModalID} pokemonID={currentPokemonIDInModal} changeIDFunction={handleChangePokemonIDInModal}/>}
+            <InfoModal id={InfoModalID} pokemonID={currentPokemonIDInModal} changeIDFunction={handleChangePokemonIDInModal} />
 
             {/* pokedex animation */}
             <Pokedex visibility={isPokedexVisible} mounted={isPokedexMounted} />
