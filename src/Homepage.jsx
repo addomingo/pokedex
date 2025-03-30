@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Pokedex from "./components/Pokedex";
 import PokemonCard from "./components/PokemonCard";
 import Lapras from "./assets/131.png";
-import Kirlia from "./assets/Kirlia.png";
+import Pokeball from "./assets/Pokeball_Icon.png";
 import axios from "axios";
 import FilterBar from "./components/FilterBar";
 import InfoModal from "./components/InfoModal";
@@ -15,10 +15,21 @@ const LoadMoreButton = (props) => {
     );
 }
 
+const LoadingPokeball = (props) => {
+    return (
+        <div className={`h-5 w-5 ${props.isLoadingVisible ? '' : 'hidden'}`}>
+            <img src={Pokeball} className="h-full aspect-square animate-spin"/>
+        </div>
+    );
+}
+
 const Homepage = () => {
     // pokedex animation
     const [isPokedexVisible, setIsPokedexVisible] = useState(true);
     const [isPokedexMounted, setIsPokedexMounted] = useState(true);
+
+    // loading indicator
+    const [isLoadingVisible, setIsLoadingVisible] = useState(false);
 
     const [allPokemon, setAllPokemon] = useState([]);
     const [loadStartIndex, setLoadStartIndex] = useState(0); // for loading pokemon by 10's
@@ -61,6 +72,8 @@ const Homepage = () => {
     // fetch pokemon data; returns an array of pokemon data
     const fetchPokemonData = async(allPokemon) => {
         try {
+            setIsLoadingVisible(true);
+
             // fetch each pokemon data
             const responses = await Promise.all(allPokemon.map((pokemon, index) => {
                 // only fetch data by 10's
@@ -80,6 +93,8 @@ const Homepage = () => {
             setPokemonData([...storedData, ...fetchedPokemonData]);
         } catch (error) {
             console.error('Error fetching pokemon data:', error);
+        } finally {
+            setIsLoadingVisible(false);
         }
     }
 
@@ -111,16 +126,20 @@ const Homepage = () => {
                 <br></br>
 
                 {/* Pokemon Card List View */}
-                <div className="h-full relative flex flex-wrap gap-2 justify-center items-center bg-LighterBlue rounded-lg p-5">
-                    {/* pokemon cards mapping */}
-                    { pokemonData.map(pokemonDetails => {
-                        return (
-                            <PokemonCard key={pokemonDetails.id} data={pokemonDetails} image={Lapras} type="water" 
-                                changeIDFunction={handleChangePokemonIDInModal}
-                                openModal={()=>{document.getElementById(InfoModalID).showModal()}}
-                            />
-                        );
-                    })}
+                <div className="h-full relative flex flex-col gap-5 justify-center items-center bg-LighterBlue rounded-lg p-5">
+                    <div className="h-full flex flex-wrap gap-2 justify-center items-center">
+                        {/* pokemon cards mapping */}
+                        { pokemonData.map(pokemonDetails => {
+                            return (
+                                <PokemonCard key={pokemonDetails.id} data={pokemonDetails} image={Lapras} type="water" 
+                                    changeIDFunction={handleChangePokemonIDInModal}
+                                    openModal={()=>{document.getElementById(InfoModalID).showModal()}}
+                                />
+                            );
+                        })}
+                    </div>
+
+                    <LoadingPokeball isLoadingVisible={isLoadingVisible}/>
 
                     {/* decorations, TLRB */}
                     <div className="absolute top-0 h-2 w-[calc(100%-200px)] bg-LightBlue rounded-b-lg"/>
