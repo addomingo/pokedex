@@ -226,7 +226,7 @@ const InfoModal = (props) => {
                 <div className="flex-1 relative flex justify-center items-center">
                     <img 
                         src={`https://assets.pokemon.com/assets/cms2/img/pokedex/full/${imageID}.png`} 
-                        className="h-[75%] aspect-square" style={{ animation: 'bounce-pokemon 10s infinite' }}
+                        className="max-h-[75%] aspect-square" style={{ animation: 'bounce-pokemon 10s infinite' }}
                     />
                     {/* spinning pokeballs */}
                     <div className="h-full w-full -z-10 absolute top-0 overflow-hidden">
