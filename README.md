@@ -8,3 +8,4 @@
 - [Pokemon Detailed Info View Reference](https://www.reddit.com/r/fakemon/comments/wgz52w/made_a_pokedex_entry_template_from_the_hgss/?rdt=63797)
 - [Tailwind Background Repository](https://bg.ibelick.com/)
 - [Pokemon Maximum Stat Value Computation](https://pokemondb.net/pokebase/6506/there-formula-for-working-pokemons-highest-possible-stats)
+- [Pokemon Weakness Chart](https://www.eurogamer.net/pokemon-go-type-chart-effectiveness-weaknesses)

@@ -4,6 +4,8 @@ import Lapras from '../assets/131.png';
 import Pokeball from '../components/Pokeball.jsx';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import getWeaknesses from './Weaknesses.js';
+
 
 const typeColor = new Map([
     ["normal", "#9fa19e"],
@@ -149,6 +151,7 @@ const InfoModal = (props) => {
     const [name, setName] = useState('Pokemon_Name');
     const [category, setCategory] = useState('Pokemon_Category'); // !!!! fetch this !!!!
     const [types, setTypes] = useState([{ type: { name: 'unknown' } }]);
+    const [weaknessList, setWeaknessList] = useState(['']);
     const [height, setHeight] = useState(0);
     const [weight, setWeight] = useState(0);
     const [abilities, setAbilities] = useState([{ ability: { name: 'unknown' }, is_hidden: false }]);
@@ -197,14 +200,13 @@ const InfoModal = (props) => {
             setName((pokemonData.name).charAt(0).toUpperCase() + (pokemonData.name).slice(1));
             setTypes(pokemonData.types);                        // to access: types[0].type.name
             fetchPokemonCategory(pokemonData.species.url);      // fetch pokemon category
+            setWeaknessList(getWeaknesses(pokemonData.types));  // derive weaknesses from types
             setHeight((pokemonData.height/10).toFixed(1));
             setWeight((pokemonData.weight/10).toFixed(1));
             setAbilities(pokemonData.abilities);                // to access: abilities[0].ability.name && abilities[0].is_hidden
             setStats(pokemonData.stats);                        // to access: stats[0].stat.name && abilities[0].base_stat
         }
     }, [pokemonData]);
-
-    const weaknessList = ['grass', 'electric', 'fighting', 'rock'];
 
     // related values
     const prevID = id-1;
@@ -258,7 +260,7 @@ const InfoModal = (props) => {
                                 <h4 className="text-sm font-bold text-white">Weaknesses</h4>
                             </div>
                             {/* weakness type list */}
-                            <div className="bg-white flex flex-col p-4 gap-2">
+                            <div className="bg-white h-40 flex flex-col overflow-y-auto p-4 gap-2">
                                 { weaknessList.map((weaknessType, index) => {
                                     return (
                                         <WeaknessTypeLabel key={index} type={weaknessType}/>
@@ -298,7 +300,7 @@ const InfoModal = (props) => {
                                 <h4 className="text-sm font-bold text-white">Abilities</h4>
                             </div>
                             {/* ablities list */}
-                            <div className="bg-white flex flex-col p-4 gap-2 justify-center items-center">
+                            <div className="bg-white flex flex-col p-3 gap-2 justify-center items-center">
                                 { abilities.map((abilityElement, index) => {
                                     return (
                                         <AbilityText key={index} name={abilityElement.ability.name} isHidden={abilityElement.is_hidden}/>
