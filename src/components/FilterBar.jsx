@@ -45,7 +45,7 @@ const FilterBar = () => {
                     <div className="flex-1 xl:flex-none bg-white text-Secondary font-bold py-2 px-5 rounded-lg flex items-center gap-5 h-10">
                         <img src={PokeballIcon} className="h-5"></img>
                         <h3 className="flex-none">Order by</h3>
-                        <select name="sort" id="sort" className="w-35 focus:outline-none grow">
+                        <select name="order" id="order" className="w-35 focus:outline-none grow">
                             <option value="asc_id">Ascending</option>
                             <option value="desc_id">Descending</option>
                         </select>
