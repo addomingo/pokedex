@@ -7,6 +7,14 @@ import axios from "axios";
 import FilterBar from "./components/FilterBar";
 import InfoModal from "./components/InfoModal";
 
+const LoadMoreButton = (props) => {
+    return (
+        <button className={`border-3 p-3 rounded-xl bg-white cursor-pointer ${props.className}`} onClick={props.onClick}>
+            Load More Pokemon
+        </button>
+    );
+}
+
 const Homepage = () => {
     // pokedex animation
     const [isPokedexVisible, setIsPokedexVisible] = useState(true);
@@ -28,6 +36,12 @@ const Homepage = () => {
         setCurrentPokemonIDInModal(pokemonID);
         console.log(currentPokemonIDInModal);
         return;
+    }
+
+    // increment by 10
+    const handleLoadMorePokemon = () => {
+        setLoadStartIndex(loadStartIndex + 10);
+        setLoadEndIndex(loadEndIndex + 10);
     }
 
     // fetch all pokemon (name and url only)
@@ -83,6 +97,10 @@ const Homepage = () => {
         fetchPokemon();
     }, []);
 
+    useEffect(() => {
+        fetchPokemonData(allPokemon);
+    }, [loadStartIndex, loadEndIndex]);
+
     return (
         <div className={`relative min-h-screen min-w-screen bg-LightBlue ${isPokedexMounted ? 'overflow-hidden' : ''}`}>
             {/* main page */}
@@ -110,6 +128,8 @@ const Homepage = () => {
                     <div className="absolute right-0 h-[calc(100%-200px)] w-2 bg-LightBlue rounded-l-lg"/>
                     <div className="absolute bottom-0 h-2 w-[calc(100%-200px)] bg-LightBlue rounded-t-lg"/>
                 </div>
+
+                <LoadMoreButton className="place-self-center" onClick={handleLoadMorePokemon}/>
             </div>
 
             {/* detailed info pop up */}
