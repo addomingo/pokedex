@@ -103,7 +103,7 @@ const Homepage = () => {
 
             {/* detailed info pop up */}
             {/* modal only renders if pokemonID is valid/exists */}
-            {(currentPokemonIDInModal != 0) && <InfoModal id={InfoModalID} pokemonID={currentPokemonIDInModal}/>}
+            {(currentPokemonIDInModal != 0) && <InfoModal id={InfoModalID} pokemonID={currentPokemonIDInModal} changeIDFunction={handleChangePokemonIDInModal}/>}
 
             {/* pokedex animation */}
             <Pokedex visibility={isPokedexVisible} mounted={isPokedexMounted} />

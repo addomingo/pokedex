@@ -94,7 +94,9 @@ const PreviousButton = (props) => {
     const prevID = props.prevID;
 
     return (
-        <button className="absolute -top-15 -left-12 font-bold text-LessHarshBlack text-start cursor-pointer">
+        <button className={`absolute -top-15 -left-12 font-bold text-LessHarshBlack text-start cursor-pointer ${(prevID >= 1) ? '' : 'hidden'}`}
+            onClick={props.onClick}
+        >
             <div className="flex">
                 <div className="pl-5 bg-white border-LessHarshBlack border-l-5 border-t-5 border-b-5 rounded-l-full"></div>
                 <div className="py-5 pl-5 pr-15 bg-white border-LessHarshBlack min-w-52 border-r-5 border-t-5 border-b-5 rounded-br-full">
@@ -110,7 +112,9 @@ const NextButton = (props) => {
     const nextID = props.nextID;
 
     return (
-        <button className="absolute -top-15 -right-12 font-bold text-LessHarshBlack text-end cursor-pointer">
+        <button className="absolute -top-15 -right-12 font-bold text-LessHarshBlack text-end cursor-pointer"
+            onClick={props.onClick}
+        >
             <div className="flex">
                 <div className="py-5 pl-15 pr-13 border-LessHarshBlack bg-white min-w-52 border-l-5 border-t-5 border-b-5 rounded-bl-full">
                     <h1 className="text-3xl leading-none">Next</h1>
@@ -191,8 +195,8 @@ const InfoModal = (props) => {
         <dialog id={props.id} className="modal">
             <div className="modal-box w-full max-w-[75vw] relative flex p-0 overflow-visible justify-center">
                 
-                <PreviousButton prevID={prevID} />
-                <NextButton nextID={nextID} />
+                <PreviousButton prevID={prevID} onClick={()=>{props.changeIDFunction(prevID)}}/>
+                <NextButton nextID={nextID} onClick={()=>{props.changeIDFunction(nextID)}}/>
                 <CloseButton modalID={modalID}/>
 
                 {/* pokemon image */}
