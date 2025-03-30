@@ -2,8 +2,9 @@ import { Search } from 'lucide-react';
 import PokeballIcon from '../assets/Pokeball_Icon.png';
 import { useState } from 'react';
 
-const FilterBar = () => {
+const FilterBar = (props) => {
     const [isAdvancedOptionsVisible, setIsAdvancedOptionsVisible] = useState(false);
+    const searchValue = props.searchValue;
 
     return (
         <>
@@ -24,10 +25,11 @@ const FilterBar = () => {
                         className="focus:outline-none grow"
                         placeholder="Enter name or ID no."
                         type="text"
-                        //value={}
+                        value={searchValue}
+                        onChange={props.onChange}
                         id="search"
                     />
-                    <Search />
+                    <Search onClick={props.onSearchClick} className="cursor-pointer"/>
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-5">

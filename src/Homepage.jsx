@@ -34,7 +34,11 @@ const Homepage = () => {
     const [allPokemon, setAllPokemon] = useState([]);
     const [loadStartIndex, setLoadStartIndex] = useState(0); // for loading pokemon by 10's
     const [loadEndIndex, setLoadEndIndex] = useState(10);
-    const [pokemonData, setPokemonData] = useState([]);
+    const [filteredPokemon, setFilteredPokemon] = useState([]);
+    const [pokemonData, setPokemonData] = useState([]); // pokemon data whose information is fetched
+
+    // filtering and sorting
+    const [searchBarValue, setSearchBarValue] = useState('');
     
     // Detailed Info View Modal information
     const InfoModalID = 'pokemon_info_modal';
@@ -56,12 +60,14 @@ const Homepage = () => {
     }
 
     // fetch all pokemon (name and url only)
+    // initial set of data
     const fetchPokemon = async() => {
         await axios.get('https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0')
         .then((res) => {
             //console.log(res.data);
             //console.log(res.data.results);
             setAllPokemon(res.data.results);
+            setFilteredPokemon(res.data.results);
             fetchPokemonData(res.data.results);
         })
         .catch((error) => {
@@ -70,12 +76,13 @@ const Homepage = () => {
     }
 
     // fetch pokemon data; returns an array of pokemon data
-    const fetchPokemonData = async(allPokemon) => {
+    const fetchPokemonData = async(pokemonArray, resetPokemonData) => {
         try {
             setIsLoadingVisible(true);
+            console.log(pokemonArray);
 
             // fetch each pokemon data
-            const responses = await Promise.all(allPokemon.map((pokemon, index) => {
+            const responses = await Promise.all(pokemonArray.map((pokemon, index) => {
                 // only fetch data by 10's
                 if ((index >= loadStartIndex) && (index < loadEndIndex)){
                     return axios.get(pokemon.url);
@@ -89,13 +96,21 @@ const Homepage = () => {
             //console.log(fetchedPokemonData);
 
             // append fetched pokemon data to already stored pokemon data
-            const storedData = pokemonData;
+            const storedData = (resetPokemonData) ? [] : pokemonData;
             setPokemonData([...storedData, ...fetchedPokemonData]);
         } catch (error) {
             console.error('Error fetching pokemon data:', error);
         } finally {
             setIsLoadingVisible(false);
         }
+    }
+
+    const sortAndFilterPokemon = () => {
+        function checkMatchingNameOrID(pokemon, searchBarValue) {
+            return ((pokemon.name.includes(searchBarValue))) || (pokemon.url.split("/")[6]).includes(searchBarValue);
+        }
+        const filteredPokemon = allPokemon.filter((pokemon) => checkMatchingNameOrID(pokemon, searchBarValue));
+        return filteredPokemon;
     }
 
 
@@ -112,16 +127,36 @@ const Homepage = () => {
         fetchPokemon();
     }, []);
 
+    // when load more pokemon button is clicked
     useEffect(() => {
-        fetchPokemonData(allPokemon);
+        //fetchPokemonData(allPokemon);
+        fetchPokemonData(sortAndFilterPokemon(), false);
     }, [loadStartIndex, loadEndIndex]);
+
+    // whenever search is clicked
+    const handleSearch = () => {
+        setLoadStartIndex(0);
+        setLoadEndIndex(10);
+        //setPokemonData([]);
+        fetchPokemonData(sortAndFilterPokemon(), true);
+    }
+
+    // useEffect(() => {
+    //     //fetchPokemonData(allPokemon);
+    //     handleSearch();
+    // }, [searchBarValue]);
+
 
     return (
         <div className={`relative min-h-screen min-w-screen bg-LightBlue ${isPokedexMounted ? 'overflow-hidden' : ''}`}>
             {/* main page */}
             <div className="flex flex-col h-full w-full p-5">
 
-                <FilterBar />
+                <FilterBar 
+                    searchValue={searchBarValue} 
+                    onChange={(e) => setSearchBarValue(e.target.value)}
+                    onSearchClick={handleSearch}
+                />
 
                 <br></br>
 
@@ -129,9 +164,9 @@ const Homepage = () => {
                 <div className="h-full relative flex flex-col gap-5 justify-center items-center bg-LighterBlue rounded-lg p-5">
                     <div className="h-full flex flex-wrap gap-2 justify-center items-center">
                         {/* pokemon cards mapping */}
-                        { pokemonData.map(pokemonDetails => {
+                        { pokemonData.map((pokemonDetails, index) => {
                             return (
-                                <PokemonCard key={pokemonDetails.id} data={pokemonDetails} image={Lapras} type="water" 
+                                <PokemonCard key={index} data={pokemonDetails} image={Lapras} type="water" 
                                     changeIDFunction={handleChangePokemonIDInModal}
                                     openModal={()=>{document.getElementById(InfoModalID).showModal()}}
                                 />
