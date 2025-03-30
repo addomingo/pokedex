@@ -175,10 +175,28 @@ const InfoModal = (props) => {
     // update values when pokemonData is changed
     // this changes the default values of the needed fields
     useEffect(() => {
+        // fetch Pokemon Category from link in pokemonData.species -> genera.genus where genera.language=="en"
+        function englishCategory(generaElement) {
+            return generaElement.language.name === "en";
+        }
+        const fetchPokemonCategory = async(url) => {
+            await axios.get(url)
+            .then((res) => {
+                //console.log(res.data);
+                const categoryEnglishVersion = (res.data.genera).filter(englishCategory);
+                //console.log(categoryEnglishVersion);
+                setCategory(categoryEnglishVersion[0].genus);
+
+            })
+            .catch((error) => {
+                console.error('Error fetching pokemon:', error);
+            });
+        }
         if (pokemonData) {
             console.log(pokemonData);
             setName((pokemonData.name).charAt(0).toUpperCase() + (pokemonData.name).slice(1));
             setTypes(pokemonData.types);                        // to access: types[0].type.name
+            fetchPokemonCategory(pokemonData.species.url);      // fetch pokemon category
             setHeight((pokemonData.height/10).toFixed(1));
             setWeight((pokemonData.weight/10).toFixed(1));
             setAbilities(pokemonData.abilities);                // to access: abilities[0].ability.name && abilities[0].is_hidden
