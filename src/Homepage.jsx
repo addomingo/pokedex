@@ -12,7 +12,9 @@ const Homepage = () => {
     const [isPokedexVisible, setIsPokedexVisible] = useState(true);
     const [isPokedexMounted, setIsPokedexMounted] = useState(true);
 
-    const [offset, setOffset] = useState(0);
+    const [allPokemon, setAllPokemon] = useState([]);
+    const [loadStartIndex, setLoadStartIndex] = useState(0); // for loading pokemon by 10's
+    const [loadEndIndex, setLoadEndIndex] = useState(10);
     const [pokemonData, setPokemonData] = useState([]);
     
     // Detailed Info View Modal information
@@ -28,12 +30,13 @@ const Homepage = () => {
         return;
     }
 
-    // fetch all pokemon
+    // fetch all pokemon (name and url only)
     const fetchPokemon = async() => {
-        await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=10&offset=${offset}`)
+        await axios.get('https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0')
         .then((res) => {
             //console.log(res.data);
-            //console.log(res.data.results[0]);
+            //console.log(res.data.results);
+            setAllPokemon(res.data.results);
             fetchPokemonData(res.data.results);
         })
         .catch((error) => {
@@ -41,14 +44,21 @@ const Homepage = () => {
         });
     }
 
-    // fetch all pokemon data; returns an array of all pokemon data
-    const fetchPokemonData = async(pokemon) => {
+    // fetch pokemon data; returns an array of pokemon data
+    const fetchPokemonData = async(allPokemon) => {
         try {
             // fetch each pokemon data
-            const responses = await Promise.all(pokemon.map(pokemon => axios.get(pokemon.url)));
+            const responses = await Promise.all(allPokemon.map((pokemon, index) => {
+                // only fetch data by 10's
+                if ((index >= loadStartIndex) && (index < loadEndIndex)){
+                    return axios.get(pokemon.url);
+                } else {
+                    return null;
+                }
+            }));
 
-            // store extracted data
-            const fetchedPokemonData = responses.map(response => response.data);
+            // store extracted data and filter out null responses
+            const fetchedPokemonData = responses.filter((response) => {return response !== null}).map(response => response.data);
             //console.log(fetchedPokemonData);
 
             // append fetched pokemon data to already stored pokemon data
