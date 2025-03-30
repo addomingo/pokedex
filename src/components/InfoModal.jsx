@@ -96,7 +96,7 @@ const PreviousButton = (props) => {
     const prevID = props.prevID;
 
     return (
-        <button className={`absolute -top-15 -left-12 font-bold text-LessHarshBlack text-start cursor-pointer ${(prevID >= 1) ? '' : 'hidden'}`}
+        <button className={`absolute -top-15 -left-12 font-bold text-LessHarshBlack text-start cursor-pointer ${(prevID >= 1) ? '' : 'hidden'} focus:outline-none`}
             onClick={props.onClick}
         >
             <div className="flex">
@@ -114,7 +114,7 @@ const NextButton = (props) => {
     const nextID = props.nextID;
 
     return (
-        <button className="absolute -top-15 -right-12 font-bold text-LessHarshBlack text-end cursor-pointer"
+        <button className="absolute -top-15 -right-12 font-bold text-LessHarshBlack text-end cursor-pointer focus:outline-none"
             onClick={props.onClick}
         >
             <div className="flex">
@@ -131,7 +131,7 @@ const NextButton = (props) => {
 const CloseButton = (props) => {
     return (
         <button 
-            className="absolute -bottom-5 flex gap-2 bg-white border-LessHarshBlack border-3 py-2 px-5 rounded-xl justify-center items-center cursor-pointer"
+            className="absolute -bottom-5 flex gap-2 bg-white border-LessHarshBlack border-3 py-2 px-5 rounded-xl justify-center items-center cursor-pointer focus:outline-none"
             onClick={()=>document.getElementById(props.modalID).close()}
         >
             <h3 className="text-xl font-semibold text-LessHarshBlack">Close</h3>
@@ -232,8 +232,10 @@ const InfoModal = (props) => {
                     <div className="h-full w-full -z-10 absolute top-0 overflow-hidden">
                         <Pokeball color={typeColor.get(types[0].type.name)} className="absolute -left-35 -bottom-35 opacity-30" style={{ animation: 'spin infinite 20s linear' }}/>
                     </div>
-                    <div className="h-[70%] -z-10 absolute -right-35 -top-35 animate-spin" style={{ animation: 'spin infinite 10s linear' }}>
-                        <Pokeball color={typeColor.get(types[0].type.name)} className="opacity-30"/>
+                    <div className="h-[70%] w-full -z-10 absolute top-0 -right-35 overflow-hidden">
+                        <div className="relative h-full w-full">
+                            <Pokeball color={typeColor.get(types[0].type.name)} className="absolute -top-35 right-0 opacity-30" style={{ animation: 'spin infinite 10s linear' }}/>
+                        </div>
                     </div>
                 </div>
                 
