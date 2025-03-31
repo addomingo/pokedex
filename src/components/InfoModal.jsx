@@ -1,11 +1,10 @@
 import { CircleX, EyeOff} from 'lucide-react';
 import PokeballIcon from '../assets/Pokeball_Icon.png';
-import Lapras from '../assets/131.png';
 import Pokeball from '../components/Pokeball.jsx';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import getWeaknesses from './Weaknesses.js';
-
+import ImageUnavailable from "../assets/ImageUnavailable.png";
+import axios from 'axios';
 
 const typeColor = new Map([
     ["normal", "#9fa19e"],
@@ -225,8 +224,8 @@ const InfoModal = (props) => {
                 {/* pokemon image */}
                 <div className="flex-1 relative flex justify-center items-center">
                     <img 
-                        src={`https://assets.pokemon.com/assets/cms2/img/pokedex/full/${imageID}.png`} 
-                        className="max-h-[75%] aspect-square" style={{ animation: 'bounce-pokemon 10s infinite' }}
+                        src={(id > 1025)? ImageUnavailable : `https://assets.pokemon.com/assets/cms2/img/pokedex/full/${imageID}.png`} 
+                        className={`max-h-[75%] aspect-square ${(id > 1025)? 'opacity-50' : ''}`} style={{ animation: 'bounce-pokemon 10s infinite' }}
                     />
                     {/* spinning pokeballs */}
                     <div className="h-full w-full -z-10 absolute top-0 overflow-hidden">
