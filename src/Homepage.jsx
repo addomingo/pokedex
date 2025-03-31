@@ -1,27 +1,11 @@
 import { useEffect, useState } from "react";
 import Pokedex from "./components/Pokedex";
 import PokemonCard from "./components/PokemonCard";
-import Lapras from "./assets/131.png";
-import Pokeball from "./assets/Pokeball_Icon.png";
-import axios from "axios";
 import FilterBar from "./components/FilterBar";
 import InfoModal from "./components/InfoModal";
-
-const LoadMoreButton = (props) => {
-    return (
-        <button className={`border-3 p-3 rounded-xl bg-white cursor-pointer ${props.className}`} onClick={props.onClick}>
-            Load More Pokemon
-        </button>
-    );
-}
-
-const LoadingPokeball = (props) => {
-    return (
-        <div className={`h-5 w-5 ${props.isLoadingVisible ? '' : 'hidden'}`}>
-            <img src={Pokeball} className="h-full aspect-square animate-spin"/>
-        </div>
-    );
-}
+import LoadMoreButton from "./components/LoadMoreButton";
+import LoadingPokeball from "./components/LoadingPokeball";
+import axios from "axios";
 
 const Homepage = () => {
     // pokedex animation
@@ -34,7 +18,6 @@ const Homepage = () => {
     const [allPokemon, setAllPokemon] = useState([]);
     const [loadStartIndex, setLoadStartIndex] = useState(0); // for loading pokemon by 10's
     const [loadEndIndex, setLoadEndIndex] = useState(10);
-    //const [filteredPokemon, setFilteredPokemon] = useState([]);
     const [pokemonData, setPokemonData] = useState([]); // pokemon data whose information is fetched
 
     // filtering and sorting
@@ -69,7 +52,6 @@ const Homepage = () => {
             //console.log(res.data);
             //console.log(res.data.results);
             setAllPokemon(res.data.results);
-            //setFilteredPokemon(res.data.results);
             fetchPokemonData(res.data.results, true);
         })
         .catch((error) => {
@@ -167,12 +149,6 @@ const Homepage = () => {
         handleFilterChange();
     }, [sortBy, orderBy]);
 
-    // useEffect(() => {
-    //     //fetchPokemonData(allPokemon);
-    //     handleSearch();
-    // }, [searchBarValue]);
-
-
     return (
         <div className={`relative min-h-screen min-w-screen bg-LightBlue ${isPokedexMounted ? 'overflow-hidden' : ''}`}>
             {/* main page */}
@@ -196,7 +172,7 @@ const Homepage = () => {
                         {/* pokemon cards mapping */}
                         { pokemonData.map((pokemonDetails, index) => {
                             return (
-                                <PokemonCard key={index} data={pokemonDetails} image={Lapras} type="water" 
+                                <PokemonCard key={index} data={pokemonDetails} 
                                     changeIDFunction={handleChangePokemonIDInModal}
                                     openModal={()=>{document.getElementById(InfoModalID).showModal()}}
                                 />
