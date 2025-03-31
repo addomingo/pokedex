@@ -106,9 +106,10 @@ const Homepage = () => {
                         comparison = -1; // sort a before b, e.g. [a, b]
                     }
                 } else { // if sorted by ID
-                    if ((a.url.split("/")[6]) > (b.url.split("/")[6])) {
+
+                    if (((a.url.split("/")[6]).toString().padStart(5, '0')) > ((b.url.split("/")[6]).toString().padStart(5, '0'))) {
                         comparison = 1;
-                    } else if ((a.url.split("/")[6]) < (b.url.split("/")[6])) {
+                    } else if (((a.url.split("/")[6]).toString().padStart(5, '0')) < ((a.url.split("/")[6]).toString().padStart(5, '0'))) {
                         comparison = -1;
                     }
                 }
