@@ -1,4 +1,5 @@
 import Pokeball from "./Pokeball";
+import ImageUnavailable from "../assets/ImageUnavailable.png";
 
 const TypeLabel = (props) => {
     const labelColor = new Map([
@@ -65,7 +66,7 @@ const PokemonCard = (props) => {
     const mainType = types[0].type.name;
  
     return (
-        <div className="h-75 sm:h-90 bg-[#ecf8ff] rounded-3xl drop-shadow-md pt-4 pb-5 px-5 cursor-pointer" 
+        <div className="h-75 sm:h-90 bg-[#ecf8ff] rounded-3xl drop-shadow-md pt-4 pb-5 px-5 flex flex-col justify-center items-center cursor-pointer" 
             style={{ 
                 background: `linear-gradient(180deg, white 50%, ${gradientColor.get(mainType)})`,
                 backgroundColor: '#ecf8ff' // fallback background color if gradient doesn't load
@@ -76,7 +77,7 @@ const PokemonCard = (props) => {
             }}
         >
             {/* pokemon number */}
-            <div className="flex justify-end gap-[2px]">
+            <div className="flex w-full justify-end gap-[2px]">
                 <h2 className="text-xs sm:text-sm font-extrabold text-BlackText leading-none">No</h2>
                 <h1 className="text-xl sm:text-2xl font-bold text-BlackText leading-none">{displayID}</h1>
             </div>
@@ -85,7 +86,7 @@ const PokemonCard = (props) => {
                 <div className="h-full p-[5%] absolute z-0">
                     <Pokeball color={gradientColor.get(mainType)} className="opacity-50"/>
                 </div>
-                <img src={`https://assets.pokemon.com/assets/cms2/img/pokedex/full/${imageID}.png`}
+                <img src={ (id > 1025)? ImageUnavailable : `https://assets.pokemon.com/assets/cms2/img/pokedex/full/${imageID}.png`}
                     className="h-full aspect-square object-cover relative z-10"/>
             </div>
             {/* pokemon name and type tags */}
