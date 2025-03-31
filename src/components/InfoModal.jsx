@@ -91,7 +91,7 @@ const StatBarAndLabel = (props) => {
     );
 }
 
-const PreviousButton = (props) => {
+const PreviousButton = (props) => {10277
     const prevID = props.prevID;
 
     return (
@@ -113,7 +113,7 @@ const NextButton = (props) => {
     const nextID = props.nextID;
 
     return (
-        <button className="absolute -top-5 lg:-top-15 -right-12 font-bold text-LessHarshBlack text-end cursor-pointer focus:outline-none"
+        <button className={`absolute -top-5 lg:-top-15 -right-12 font-bold text-LessHarshBlack text-end cursor-pointer focus:outline-none ${(nextID > 10277) ? 'hidden' : ''}`}
             onClick={props.onClick}
         >
             <div className="flex">
