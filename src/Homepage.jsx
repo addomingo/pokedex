@@ -19,6 +19,7 @@ const Homepage = () => {
     const [loadStartIndex, setLoadStartIndex] = useState(0); // for loading pokemon by 10's
     const [loadEndIndex, setLoadEndIndex] = useState(10);
     const [pokemonData, setPokemonData] = useState([]); // pokemon data whose information is fetched
+    const [filteredPokemon, setFilteredPokemon] = useState([]);
 
     // filtering and sorting
     const [searchBarValue, setSearchBarValue] = useState('');
@@ -52,6 +53,7 @@ const Homepage = () => {
             //console.log(res.data);
             //console.log(res.data.results);
             setAllPokemon(res.data.results);
+            setFilteredPokemon(res.data.results);
             fetchPokemonData(res.data.results, true);
         })
         .catch((error) => {
@@ -63,7 +65,7 @@ const Homepage = () => {
     const fetchPokemonData = async(pokemonArray, resetPokemonData) => {
         try {
             setIsLoadingVisible(true);
-            console.log(pokemonArray);
+            //console.log(pokemonArray);
 
             // fetch each pokemon data
             const responses = await Promise.all(pokemonArray.map((pokemon, index) => {
@@ -116,6 +118,7 @@ const Homepage = () => {
         };
         const filteredPokemon = allPokemon.filter((pokemon) => checkMatchingNameOrID(pokemon, searchBarValue));
         const sortedFilteredPokemon = sortByAndOrderBy(filteredPokemon, sortBy, orderBy);
+        setFilteredPokemon(sortedFilteredPokemon);
         return sortedFilteredPokemon;
     }
 
@@ -150,7 +153,7 @@ const Homepage = () => {
     }, [sortBy, orderBy]);
 
     return (
-        <div className={`relative min-h-screen min-w-screen bg-LightBlue ${isPokedexMounted ? 'overflow-hidden' : ''}`}>
+        <div className={`relative min-h-screen w-full bg-LightBlue ${isPokedexMounted ? 'overflow-hidden' : ''}`}>
             {/* main page */}
             <div className="flex flex-col h-full w-full p-5">
 
@@ -189,7 +192,7 @@ const Homepage = () => {
                     <div className="absolute bottom-0 h-2 w-[calc(100%-200px)] bg-LightBlue rounded-t-lg"/>
                 </div>
 
-                <LoadMoreButton className="place-self-center" onClick={handleLoadMorePokemon}/>
+                {(loadEndIndex < filteredPokemon.length) && <LoadMoreButton className="place-self-center" onClick={handleLoadMorePokemon}/>}
             </div>
 
             {/* detailed info pop up */}
