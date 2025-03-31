@@ -43,15 +43,10 @@ Upon downloading the POKÉDEX project, follow the instructions below: </br>
     1. Launch the application by running the command:
         npm run dev
 
-<!-- ![Admin Homepage](./frontend/public/previews/admin_home.png)
-![Admin Product Listing](./frontend/public/previews/admin_products.png)
-![Admin Add Product](./frontend/public/previews/admin_add_product.png)
-![Admin Edit Product](./frontend/public/previews/admin_edit_product.png)
-![Admin Accounts](./frontend/public/previews/admin_accounts.png)
-![Admin Manage Orders](./frontend/public/previews/admin_orders.png)
-![Admin Pending Orders](./frontend/public/previews/admin_pending_orders.png)
-![Admin Sales Report](./frontend/public/previews/admin_sales.png) -->
 ## Previews
+![Homepage](./public/previews/Homepage.png)
+![Homepage Zoomed Out](./public/previews/Homepage2.png)
+![Detailed Pokémon View](./public/previews/DetailedView.png)
 
 ## Resources
 - [Kalos Region Pokédex Design Reference](https://pin.it/4N8PxANkn)
