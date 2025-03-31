@@ -19,16 +19,16 @@ const FilterBar = (props) => {
             <div className="flex flex-col xl:flex-row gap-5 bg-LighterBlue mx-2 px-5 py-3">
                 {/* search bar */}
                 <div className="grow flex bg-white text-Secondary font-bold py-2 px-5 rounded-lg flex gap-5 h-10">
-                    <h3 className="flex-none">Find that Pokemon!</h3>
+                    <h3 className="flex-none">Find that Pokémon!</h3>
                     <input 
-                        className="focus:outline-none grow"
+                        className="focus:outline-none grow min-w-[50px] autofill:bg-white autofill:text-Secondary"
                         placeholder="Enter name or ID no."
                         type="text"
                         value={searchValue}
                         onChange={props.onChange}
                         id="search"
                     />
-                    <Search onClick={props.onSearchClick} className="cursor-pointer"/>
+                    <Search onClick={props.onSearchClick} className="flex-none cursor-pointer"/>
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-5">
