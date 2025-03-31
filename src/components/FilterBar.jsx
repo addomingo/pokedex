@@ -3,7 +3,6 @@ import PokeballIcon from '../assets/Pokeball_Icon.png';
 import { useState } from 'react';
 
 const FilterBar = (props) => {
-    const [isAdvancedOptionsVisible, setIsAdvancedOptionsVisible] = useState(false);
     const searchValue = props.searchValue;
 
     return (
@@ -37,9 +36,9 @@ const FilterBar = (props) => {
                     <div className="flex-1 xl:flex-none bg-white text-Secondary font-bold py-2 px-5 rounded-lg flex items-center gap-5 h-10">
                         <img src={PokeballIcon} className="h-5"></img>
                         <h3 className="flex-none">Sort by</h3>
-                        <select name="sort" id="sort" className="w-30 focus:outline-none grow">
-                            <option value="asc_id">ID no.</option>
-                            <option value="desc_id">Name</option>
+                        <select name="sort" id="sort" className="w-30 focus:outline-none grow" value={props.sortByValue} onChange={props.changeSortBy}>
+                            <option value="id">ID no.</option>
+                            <option value="name">Name</option>
                         </select>
                     </div>
 
@@ -47,18 +46,12 @@ const FilterBar = (props) => {
                     <div className="flex-1 xl:flex-none bg-white text-Secondary font-bold py-2 px-5 rounded-lg flex items-center gap-5 h-10">
                         <img src={PokeballIcon} className="h-5"></img>
                         <h3 className="flex-none">Order by</h3>
-                        <select name="order" id="order" className="w-35 focus:outline-none grow">
-                            <option value="asc_id">Ascending</option>
-                            <option value="desc_id">Descending</option>
+                        <select name="order" id="order" className="w-35 focus:outline-none grow" value={props.orderByValue} onChange={props.changeOrderBy}>
+                            <option value="asc">Ascending</option>
+                            <option value="desc">Descending</option>
                         </select>
                     </div>
                     
-                    {/* button to show advanced search options */}
-                    {/* <button className="bg-white text-Secondary font-bold py-2 px-5 rounded-lg flex gap-2 justify-center items-center cursor-pointer">
-                        <img src={PokeballIcon} className="h-5"></img>
-                        Show Advanced Search
-                        <img src={PokeballIcon} className="h-5"></img>
-                    </button> */}
                 </div>
             </div>
 
