@@ -43,7 +43,8 @@ Upon downloading the POKÉDEX project, follow the instructions below: </br>
     1. Launch the application by running the command:
         npm run dev
 
-## Previews
+## Application Previews
+![Pokedex Animation](./public/previews/Pokedex.png)
 ![Homepage](./public/previews/Homepage.png)
 ![Homepage Zoomed Out](./public/previews/Homepage2.png)
 ![Detailed Pokémon View](./public/previews/DetailedView.png)
