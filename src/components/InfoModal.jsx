@@ -47,7 +47,7 @@ const PokemonTypeLabel = (props) => {
     const label = type.charAt(0).toUpperCase() + type.slice(1);
 
     return (
-        <div className="text-3xl font-semibold text-white w-full p-[3px] sm:p-[2px] rounded-md sm:rounded-lg flex justify-center items-center" style={{ backgroundColor: typeColor.get(type) }}>
+        <div className="text-2xl lg:text-3xl font-semibold text-white w-full p-[3px] sm:p-[2px] rounded-md sm:rounded-lg flex justify-center items-center" style={{ backgroundColor: typeColor.get(type) }}>
             {label}
         </div>
     );
@@ -60,7 +60,7 @@ const AbilityText = (props) => {
 
     return (
         <div className="flex gap-2">
-            <h2 className={`text-2xl font-semibold ${isHidden ? 'text-GrayHeader' : 'text-GrayBorder'} `}>{name}</h2>
+            <h2 className={`text-xl lg:text-2xl font-semibold ${isHidden ? 'text-GrayHeader' : 'text-GrayBorder'} `}>{name}</h2>
             { isHidden && <EyeOff style={{ color: '#C6C6C6' }}/> }
         </div>
     );
@@ -83,8 +83,8 @@ const StatBarAndLabel = (props) => {
 
     return (
         <div className="flex gap-2 items-center">
-            <h4 className="w-4/15 text-md font-bold text-GrayBorder text-center leading-none">{ statLabel.get(statName) }</h4>
-            <div className="grow h-[8px] bg-GrayHeader">
+            <h4 className="w-4/15 text-sm lg:text-md font-bold text-GrayBorder text-center leading-none">{ statLabel.get(statName) }</h4>
+            <div className="grow h-[7px] lg:h-[8px] bg-GrayHeader">
                 <hr className={`h-full border-none`} style={{ width: `${barValue}%`, backgroundColor: typeColor.get(pokemonType) }}/>
             </div>
         </div>
@@ -95,14 +95,14 @@ const PreviousButton = (props) => {
     const prevID = props.prevID;
 
     return (
-        <button className={`absolute -top-15 -left-12 font-bold text-LessHarshBlack text-start cursor-pointer ${(prevID >= 1) ? '' : 'hidden'} focus:outline-none`}
+        <button className={`absolute -top-5 lg:-top-15 -left-12 font-bold text-LessHarshBlack text-start cursor-pointer ${(prevID >= 1) ? '' : 'hidden'} focus:outline-none`}
             onClick={props.onClick}
         >
             <div className="flex">
                 <div className="pl-5 bg-white border-LessHarshBlack border-l-5 border-t-5 border-b-5 rounded-l-full"></div>
-                <div className="py-5 pl-5 pr-15 bg-white border-LessHarshBlack min-w-52 border-r-5 border-t-5 border-b-5 rounded-br-full">
-                    <h1 className="text-3xl leading-none">Previous</h1>
-                    <h3 className="text-xl leading-none">{prevID.toString().padStart(4, '0')}</h3>
+                <div className="py-5 pl-5 pr-15 bg-white border-LessHarshBlack min-w-45 border-r-5 border-t-5 border-b-5 rounded-br-full">
+                    <h1 className="text-2xl lg:text-3xl leading-none">Previous</h1>
+                    <h3 className="text-lg lg:text-xl leading-none">{prevID.toString().padStart(4, '0')}</h3>
                 </div>
             </div>
         </button>
@@ -113,13 +113,13 @@ const NextButton = (props) => {
     const nextID = props.nextID;
 
     return (
-        <button className="absolute -top-15 -right-12 font-bold text-LessHarshBlack text-end cursor-pointer focus:outline-none"
+        <button className="absolute -top-5 lg:-top-15 -right-12 font-bold text-LessHarshBlack text-end cursor-pointer focus:outline-none"
             onClick={props.onClick}
         >
             <div className="flex">
-                <div className="py-5 pl-15 pr-13 border-LessHarshBlack bg-white min-w-52 border-l-5 border-t-5 border-b-5 rounded-bl-full">
-                    <h1 className="text-3xl leading-none">Next</h1>
-                    <h3 className="text-xl leading-none">{nextID.toString().padStart(4, '0')}</h3>
+                <div className="py-5 pl-15 pr-13 border-LessHarshBlack bg-white min-w-45 border-l-5 border-t-5 border-b-5 rounded-bl-full">
+                    <h1 className="text-2xl lg:text-3xl leading-none">Next</h1>
+                    <h3 className="text-lg lg:text-xl leading-none">{nextID.toString().padStart(4, '0')}</h3>
                 </div>
                 <div className="pl-5 bg-white border-LessHarshBlack border-r-5 border-t-5 border-b-5 rounded-r-full"></div>
             </div>
@@ -130,7 +130,7 @@ const NextButton = (props) => {
 const CloseButton = (props) => {
     return (
         <button 
-            className="absolute -bottom-5 flex gap-2 bg-white border-LessHarshBlack border-3 py-2 px-5 rounded-xl justify-center items-center cursor-pointer focus:outline-none"
+            className="absolute -bottom-5 flex gap-2 bg-white border-LessHarshBlack border-3 py-2 px-5 rounded-xl justify-center items-center cursor-pointer focus:outline-none self-center"
             onClick={()=>document.getElementById(props.modalID).close()}
         >
             <h3 className="text-xl font-semibold text-LessHarshBlack">Close</h3>
@@ -215,17 +215,17 @@ const InfoModal = (props) => {
 
     return (
         <dialog id={props.id} className="modal">
-            <div className="modal-box w-full max-w-[75vw] relative flex p-0 overflow-visible justify-center">
+            <div className="modal-box w-full max-w-[75vw] relative flex flex-col lg:flex-row p-0 overflow-visible justify-center">
                 
                 <PreviousButton prevID={prevID} onClick={()=>{props.changeIDFunction(prevID)}}/>
                 <NextButton nextID={nextID} onClick={()=>{props.changeIDFunction(nextID)}}/>
                 <CloseButton modalID={modalID}/>
 
                 {/* pokemon image */}
-                <div className="flex-1 relative flex justify-center items-center">
+                <div className="flex-1 relative flex justify-center -z-10 items-center">
                     <img 
                         src={(id > 1025)? ImageUnavailable : `https://assets.pokemon.com/assets/cms2/img/pokedex/full/${imageID}.png`} 
-                        className={`max-h-[75%] aspect-square ${(id > 1025)? 'opacity-50' : ''}`} style={{ animation: 'bounce-pokemon 10s infinite' }}
+                        className={`max-h-[75%] max-w-[250px] lg:max-w-full aspect-square ${(id > 1025)? 'opacity-50' : ''}`} style={{ animation: 'bounce-pokemon 10s infinite' }}
                     />
                     {/* spinning pokeballs */}
                     <div className="h-full w-full -z-10 absolute top-0 overflow-hidden">
@@ -244,13 +244,13 @@ const InfoModal = (props) => {
                     <div className={`flex-1 flex-col border border-3 rounded-xl border-GrayBorder overflow-hidden ${shadowStyle}`}>
                         {/* pokemon ID number and name */}
                         <div className="flex gap-2 px-4 py-2" style={{ backgroundColor: typeColor.get(types[0].type.name) }}>
-                            <img src={PokeballIcon} className="h-8 flex-none aspect-square rounded-full m-[3px] border border-white border-3"/>
-                            <h1 className="flex-none text-3xl font-bold text-white">{displayID}</h1>
-                            <h1 className="flex-grow text-3xl font-bold text-white pl-10">{name}</h1>
+                            <img src={PokeballIcon} className="h-6 lg:h-8 flex-none aspect-square rounded-full m-[3px] border border-white border-3"/>
+                            <h1 className="flex-none text-2xl lg:text-3xl font-bold text-white">{displayID}</h1>
+                            <h1 className="flex-grow text-2xl lg:text-3xl font-bold text-white pl-10">{name}</h1>
                         </div>
                         {/* pokemon category */}
                         <div className="bg-white flex justify-end px-4 py-2">
-                            <h2 className="text-2xl font-semibold text-GrayBorder">{category}</h2>
+                            <h2 className="text-xl lg:text-2xl font-semibold text-GrayBorder">{category}</h2>
                         </div>
                     </div>
                     <br></br>
@@ -261,7 +261,7 @@ const InfoModal = (props) => {
                                 <h4 className="text-sm font-bold text-white">Weaknesses</h4>
                             </div>
                             {/* weakness type list */}
-                            <div className="bg-white h-40 flex flex-col overflow-y-auto p-4 gap-2">
+                            <div className="bg-white h-35 lg:h-40 flex flex-col overflow-y-auto p-4 gap-2">
                                 { weaknessList.map((weaknessType, index) => {
                                     return (
                                         <WeaknessTypeLabel key={index} type={weaknessType}/>
@@ -282,13 +282,13 @@ const InfoModal = (props) => {
                             {/* height and weight box */}
                             <div className={`flex-col border border-3 rounded-xl border-GrayBorder overflow-hidden ${shadowStyle}`}>
                                 <div className="bg-white flex px-10 py-2 gap-2">
-                                    <h2 className="flex-none text-2xl font-semibold text-GrayBorder">Height</h2>
-                                    <h2 className="grow text-center text-2xl font-semibold text-GrayBorder">{`${height}m`}</h2>
+                                    <h2 className="flex-none text-xl lg:text-2xl font-semibold text-GrayBorder">Height</h2>
+                                    <h2 className="grow text-center text-xl lg:text-2xl font-semibold text-GrayBorder">{`${height}m`}</h2>
                                 </div>
                                 <hr className="border-t-5 border-dashed border-[#9EA7AA]"></hr>
                                 <div className="bg-white flex px-10 py-2 gap-2">
-                                    <h2 className="flex-none text-2xl font-semibold text-GrayBorder">Weight</h2>
-                                    <h2 className="grow text-center text-2xl font-semibold text-GrayBorder">{`${weight} kg`}</h2>
+                                    <h2 className="flex-none text-xl lg:text-2xl font-semibold text-GrayBorder">Weight</h2>
+                                    <h2 className="grow text-center text-xl lg:text-2xl font-semibold text-GrayBorder">{`${weight} kg`}</h2>
                                 </div>
                             </div>
                         </div>
