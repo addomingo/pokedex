@@ -154,7 +154,7 @@ const Homepage = () => {
     }, [sortBy, orderBy]);
 
     return (
-        <div className={`relative min-h-screen w-full bg-LightBlue ${isPokedexMounted ? 'overflow-hidden' : ''}`}>
+        <div className={`relative min-h-screen w-full bg-LightBlue ${isPokedexMounted ? 'h-screen overflow-hidden' : ''}`}>
             {/* main page */}
             <div className="flex flex-col h-full w-full p-5">
 
