@@ -6,6 +6,7 @@ import InfoModal from "./components/InfoModal";
 import LoadMoreButton from "./components/LoadMoreButton";
 import LoadingPokeball from "./components/LoadingPokeball";
 import axios from "axios";
+import PokeballShaded from "./components/PokeballShaded";
 
 const Homepage = () => {
     // pokedex animation
@@ -48,7 +49,7 @@ const Homepage = () => {
     // fetch all pokemon (name and url only)
     // initial set of data
     const fetchPokemon = async() => {
-        await axios.get('https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0')
+        await axios.get('https://pokeapi.co/api/v2/pokemon?limit=1025&offset=0')
         .then((res) => {
             //console.log(res.data);
             //console.log(res.data.results);
@@ -154,7 +155,16 @@ const Homepage = () => {
     }, [sortBy, orderBy]);
 
     return (
-        <div className={`relative min-h-screen w-full bg-LightBlue ${isPokedexMounted ? 'h-screen overflow-hidden' : ''}`}>
+        <main className={`relative min-h-screen w-full bg-(image:--gradient-teal-diagonal) bg-fixed ${isPokedexMounted ? 'h-screen' : ''} overflow-hidden`}>
+            
+            {/* pokeball background design */}
+            <div className="fixed -top-50 -right-50 h-screen">
+                <PokeballShaded color="var(--color-LightBlue)"/>
+            </div>
+            <div className="fixed -bottom-50 -left-50 h-screen">
+                <PokeballShaded color="var(--color-LightBlue)"/>
+            </div>
+            
             {/* main page */}
             <div className="flex flex-col h-full w-full p-5">
 
@@ -171,7 +181,8 @@ const Homepage = () => {
                 <br></br>
 
                 {/* Pokemon Card List View */}
-                <div className="h-full relative flex flex-col gap-5 justify-center items-center bg-LighterBlue rounded-lg p-5">
+                {/* <div className="h-full relative flex flex-col gap-5 justify-center items-center bg-LighterBlue rounded-lg p-5"> */}
+                <div className="h-full relative flex flex-col gap-5 justify-center items-center rounded-lg p-5 ">
                     <div className="h-full flex flex-wrap gap-2 justify-center items-center">
                         {/* pokemon cards mapping */}
                         { pokemonData.map((pokemonDetails, index) => {
@@ -187,10 +198,10 @@ const Homepage = () => {
                     <LoadingPokeball isLoadingVisible={isLoadingVisible}/>
 
                     {/* decorations, TLRB */}
-                    <div className="absolute top-0 h-2 w-[calc(100%-200px)] bg-LightBlue rounded-b-lg"/>
+                    {/* <div className="absolute top-0 h-2 w-[calc(100%-200px)] bg-LightBlue rounded-b-lg"/>
                     <div className="absolute left-0 h-[calc(100%-200px)] w-2 bg-LightBlue rounded-r-lg"/>
                     <div className="absolute right-0 h-[calc(100%-200px)] w-2 bg-LightBlue rounded-l-lg"/>
-                    <div className="absolute bottom-0 h-2 w-[calc(100%-200px)] bg-LightBlue rounded-t-lg"/>
+                    <div className="absolute bottom-0 h-2 w-[calc(100%-200px)] bg-LightBlue rounded-t-lg"/> */}
                 </div>
 
                 {(loadEndIndex < filteredPokemon.length) && <LoadMoreButton className="place-self-center" onClick={handleLoadMorePokemon}/>}
@@ -201,7 +212,7 @@ const Homepage = () => {
 
             {/* pokedex animation */}
             <Pokedex visibility={isPokedexVisible} mounted={isPokedexMounted} />
-        </div>
+        </main>
     );
 }
 

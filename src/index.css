@@ -15,6 +15,12 @@
   --color-GrayHeader: #C6C6C6;        /* header color for abilities and stats */
   --color-LessHarshBlack: #303030;
 
+  --gradient-teal-diagonal: linear-gradient(
+    to bottom right,
+    white,
+    var(--color-LightBlue)
+  );
+
   --font-Inter: "Inter", serif;
 }
 
@@ -30,7 +36,21 @@
 }
 
 @layer base {
+  :root {
+    --gradient-teal-diagonal: linear-gradient(
+      to bottom right,
+      white,
+      var(--color-LightBlue)
+    );
+  }
+
 	body {
 		@apply font-Inter;
 	}
+}
+
+@layer components {
+  .prev-button {
+    clip-path: polygon(0 0, 85% 0, 100% 50%, 85% 100%, 0 100%, 0 0);
+  }
 }

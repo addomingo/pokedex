@@ -66,9 +66,9 @@ const PokemonCard = (props) => {
     const mainType = types[0].type.name;
  
     return (
-        <div className="h-75 sm:h-90 bg-[#ecf8ff] rounded-3xl drop-shadow-md pt-4 pb-5 px-5 flex flex-col justify-center items-center cursor-pointer" 
+        <div className="h-75 sm:h-90 bg-[#ecf8ff] rounded-3xl drop-shadow-md backdrop-blur-sm pt-4 pb-5 px-5 flex flex-col justify-center items-center cursor-pointer" 
             style={{ 
-                background: `linear-gradient(180deg, white 50%, ${gradientColor.get(mainType)})`,
+                background: `linear-gradient(180deg, rgba(255, 255, 255, 0.6) 50%, ${gradientColor.get(mainType)})`,
                 backgroundColor: '#ecf8ff' // fallback background color if gradient doesn't load
             }}
             onClick={()=>{

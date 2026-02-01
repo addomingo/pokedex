@@ -91,7 +91,7 @@ const StatBarAndLabel = (props) => {
     );
 }
 
-const PreviousButton = (props) => {10277
+const PreviousButton = (props) => {
     const prevID = props.prevID;
 
     return (
@@ -113,7 +113,7 @@ const NextButton = (props) => {
     const nextID = props.nextID;
 
     return (
-        <button className={`absolute -top-5 lg:-top-15 -right-12 font-bold text-LessHarshBlack text-end cursor-pointer focus:outline-none ${(nextID > 10277) ? 'hidden' : ''}`}
+        <button className={`absolute -top-5 lg:-top-15 -right-12 font-bold text-LessHarshBlack text-end cursor-pointer focus:outline-none ${(nextID > 1025) ? 'hidden' : ''}`}
             onClick={props.onClick}
         >
             <div className="flex">
@@ -214,7 +214,7 @@ const InfoModal = (props) => {
     const shadowStyle = 'shadow-[15px_15px_4px_#bfbfbf]';
 
     return (
-        <dialog id={props.id} className="modal">
+        <dialog id={props.id} className="modal backdrop-blur-sm">
             <div className="modal-box w-full max-w-[75vw] relative flex flex-col lg:flex-row p-0 overflow-visible justify-center">
                 
                 <PreviousButton prevID={prevID} onClick={()=>{props.changeIDFunction(prevID)}}/>
