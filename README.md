@@ -56,3 +56,6 @@ Upon downloading the POKÉDEX project, follow the instructions below: </br>
 - [Pokedex Entry Template by irradiatedsnakes](https://www.reddit.com/r/fakemon/comments/wgz52w/made_a_pokedex_entry_template_from_the_hgss/?rdt=63797)
 - [Pokemon Maximum Stat Value Computation by Pokemaster](https://pokemondb.net/pokebase/6506/there-formula-for-working-pokemons-highest-possible-stats)
 - [Pokemon Weakness Chart](https://www.eurogamer.net/pokemon-go-type-chart-effectiveness-weaknesses)
+
+## Notes
+This is an outdated javascript version.
