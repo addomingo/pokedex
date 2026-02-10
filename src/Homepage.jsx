@@ -158,12 +158,12 @@ const Homepage = () => {
         <main className={`relative min-h-screen w-full bg-(image:--gradient-teal-diagonal) bg-fixed ${isPokedexMounted ? 'h-screen' : ''} overflow-hidden`}>
             
             {/* pokeball background design */}
-            <div className="fixed -top-50 -right-50 h-screen">
+            {/* <div className="fixed -top-50 -right-50 h-screen">
                 <PokeballShaded color="var(--color-LightBlue)"/>
             </div>
             <div className="fixed -bottom-50 -left-50 h-screen">
                 <PokeballShaded color="var(--color-LightBlue)"/>
-            </div>
+            </div> */}
             
             {/* main page */}
             <div className="flex flex-col h-full w-full p-5">
